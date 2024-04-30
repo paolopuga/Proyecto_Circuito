@@ -1,0 +1,8 @@
+# Ignora archivos de vscode
+.vscode
+
+# Ignora los tar
+*.tar
+
+# Ignora todos los archivos de texto
+*.txt
