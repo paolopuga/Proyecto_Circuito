@@ -622,22 +622,8 @@ Categoria& Categorias::ValorCasilla(const int num_casilla) const
 // Devuelve: true si son iguales, false en caso contrario.
 bool Categorias:: EsIgualA(const Categorias& otro) const
 {
-    bool es_igual = true; // Inicializamos la variable
+    int tamanio_union = (*this + otro).Usados(); // Unimos 
+    int tamanio_interseccion = (*this * otro).Usados(); // Intersectamos 
 
-    if (usados != otro.usados) // Si los usados son distintos
-    {
-        es_igual = false; // No son iguales
-    }
-    else // Si los usados son iguales
-    {
-        for (int i = 0; i < usados; i++) // Recorremos los datos
-        {
-            if (datos[i].GetIdCategoria() != otro.datos[i].GetIdCategoria())
-            {
-                es_igual = false; // No son iguales
-            }
-        }
-    }
-
-    return es_igual; // Devolvemos si son iguales
+    return (tamanio_union==tamanio_interseccion); // Devolvemos si son iguales
 }
