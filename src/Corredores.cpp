@@ -29,9 +29,7 @@ using namespace std;
 // Descripción: Crea un objeto Corredores vacío.
 Corredores::Corredores(void)
 {
-    capacidad = TAM_BLOQUE; // Inicializamos la capacidad
-    datos = new Corredor[capacidad]; // Reservamos memoria
-    usados = 0; // Inicializamos los usados
+    ReservarMemoria(); // Reservamos memoria
 }
 
 /***********************************************/
@@ -54,16 +52,7 @@ Corredores::Corredores(const Corredores& otro)
 //      capacidad_inicial: Capacidad inicial deseada.
 Corredores::Corredores(int capacidad_inicial)
 {
-    if (capacidad_inicial <= 0) // Si la capacidad es menor o igual a 0
-    {
-        capacidad = TAM_BLOQUE; // Inicializamos la capacidad
-    }
-    else // Si la capacidad es mayor que 0
-    {
-        capacidad = capacidad_inicial; // Inicializamos la capacidad
-    }
-    datos = new Corredor[capacidad]; // Reservamos memoria
-    usados = 0; // Inicializamos los usados
+    ReservarMemoria(capacidad_inicial); // Reservamos memoria
 }
 
 /***********************************************/
@@ -79,7 +68,7 @@ Corredores::~Corredores(void)
 /***********************************************/
 // getCapacidad
 // Descripción: Devuelve la capacidad actual del objeto.
-int Corredores::Capacidad(void)
+int Corredores::Capacidad(void) const
 {
     return capacidad; // Devolvemos la capacidad
 }
@@ -88,7 +77,7 @@ int Corredores::Capacidad(void)
 /***********************************************/
 // getUsados
 // Descripción: Devuelve la cantidad de elementos utilizados en el objeto.
-int Corredores:: Usados(void)
+int Corredores:: Usados(void) const
 {
     return usados; // Devolvemos los usados
 }
@@ -458,14 +447,11 @@ Corredores operator+(const Corredores uno, const Corredores& otro)
 // Devuelve: Un objeto Corredores con el Corredor añadido.
 Corredores operator+(const Corredores uno, const Corredor& otro)
 {
-    Corredores resultado = uno; // Copiamos el primer objeto
+    Corredores corredor; // Creamos un objeto vacío
 
-    if (!(otro&&uno)) // si no está contenido
-    {
-        resultado.Aniade(otro); // Añadimos el objeto
-    }
+    corredor.Aniade(otro); // Añadimos el corredor
 
-    return resultado; // Devolvemos el resultado
+    return uno + corredor; // Concatenamos los objetos
 
 }
 
@@ -530,6 +516,24 @@ void Corredores::ReservarMemoria (const Corredores& otro)
     datos = new Corredor[capacidad]; // Reservamos memoria
     usados = otro.usados; // Copiamos los usados
    
+}
+
+/************************************************************/
+/************************************************************/
+// Pide memoria dado la capacidad
+// Parámetros: capacidad, capacidad deseada.
+void Corredores::ReservarMemoria (int capacidad_inicial)
+{
+    if (capacidad_inicial <= 0) // Si la capacidad es menor o igual a 0
+    {
+        capacidad = TAM_BLOQUE; // Inicializamos la capacidad
+    }
+    else // Si la capacidad es mayor que 0
+    {
+        capacidad = capacidad_inicial; // Inicializamos la capacidad
+    }
+    datos = new Corredor[capacidad]; // Reservamos memoria
+    usados = 0; // Inicializamos los usados
 }
 
 /************************************************************/

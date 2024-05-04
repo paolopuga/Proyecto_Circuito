@@ -71,13 +71,13 @@ public:
 	/***********************************************/
 	// getCapacidad
 	// Descripción: Devuelve la capacidad actual del objeto.
-	int Capacidad(void);
+	int Capacidad(void)const;
 
 	/***********************************************/
 	/***********************************************/
 	// getUsados
 	// Descripción: Devuelve la cantidad de elementos utilizados en el objeto.
-	int Usados(void);
+	int Usados(void)const;
 
 	/***********************************************/
 	/***********************************************/
@@ -316,6 +316,12 @@ private:
 
 	/************************************************************/
 	/************************************************************/
+	// Pide memoria dado la capacidad
+	// Parámetros: capacidad, capacidad deseada, por defecto TAM_BLOQUE
+	void ReservarMemoria (int capacidad_incial = TAM_BLOQUE);
+
+	/************************************************************/
+	/************************************************************/
 	// Copiar datos desde otro objeto de la clase
 	// Parámetros: otro (referencia), objeto que sirve de modelo.
 	//
@@ -332,11 +338,13 @@ private:
 	/***********************************************/
 	/***********************************************/
 	// Reajusta la capacidad del objeto para adaptarla al número de elementos.
+	
 	void Reajusta(void);
 
 	/***********************************************/
 	/***********************************************/
 	// Redimensiona el objeto para aumentar su capacidad.
+	
 	void Redimensiona(void);
 
 	/***********************************************/
@@ -347,6 +355,7 @@ private:
 	//      num_casilla: Índice de la casilla deseada.
 	// Devuelve: Una referencia al objeto en la posición especificada.
 	// PRE: 0 <= num_casilla < usados
+	
 	Categoria& ValorCasilla(const int num_casilla) const;
 
 
@@ -357,6 +366,7 @@ private:
 	// Argumentos:
 	//      otro: Objeto Categorias con el que se compara.
 	// Devuelve: true si son iguales, false en caso contrario.
+	
 	bool EsIgualA(const Categorias& otro) const;
 
 };

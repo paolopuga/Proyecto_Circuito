@@ -29,9 +29,7 @@ using namespace std;
 // Descripción: Crea un objeto Resultados vacío.
 Resultados::Resultados(void)
 {
-    capacidad = TAM_BLOQUE; // Inicializamos la capacidad
-    datos = new Resultado[capacidad]; // Reservamos memoria
-    usados = 0; // Inicializamos los usados
+    ReservarMemoria(); // Reservamos memoria
 }
 
 /***********************************************/
@@ -54,16 +52,7 @@ Resultados::Resultados(const Resultados& otro)
 //      capacidad_inicial: Capacidad inicial deseada.
 Resultados::Resultados(int capacidad_inicial)
 {
-    if (capacidad_inicial <= 0) // Si la capacidad es menor o igual a 0
-    {
-        capacidad = TAM_BLOQUE; // Inicializamos la capacidad
-    }
-    else // Si la capacidad es mayor que 0
-    {
-        capacidad = capacidad_inicial; // Inicializamos la capacidad
-    }
-    datos = new Resultado[capacidad]; // Reservamos memoria
-    usados = 0; // Inicializamos los usados
+    ReservarMemoria(capacidad_inicial); // Reservamos memoria
 }
 
 /***********************************************/
@@ -79,7 +68,7 @@ Resultados::~Resultados(void)
 /***********************************************/
 // getCapacidad
 // Descripción: Devuelve la capacidad actual del objeto.
-int Resultados::Capacidad(void)
+int Resultados::Capacidad(void) const 
 {
     return capacidad; // Devolvemos la capacidad
 }
@@ -88,7 +77,7 @@ int Resultados::Capacidad(void)
 /***********************************************/
 // getUsados
 // Descripción: Devuelve la cantidad de elementos utilizados en el objeto.
-int Resultados:: Usados(void)
+int Resultados:: Usados(void) const 
 {
     return usados; // Devolvemos los usados
 }
@@ -458,14 +447,11 @@ Resultados operator+(const Resultados uno, const Resultados& otro)
 // Devuelve: Un objeto Resultados con el Resultado añadido.
 Resultados operator+(const Resultados uno, const Resultado& otro)
 {
-    Resultados resultado = uno; // Copiamos el primer objeto
+    Resultados resultado; // Objeto resultado
 
-    if (!(otro&&uno)) // si no está contenido
-    {
-        resultado.Aniade(otro); // Añadimos el objeto
-    }
+    resultado.Aniade(otro); // Añadimos el objeto
 
-    return resultado; // Devolvemos el resultado
+    return uno + resultado; // Concatenamos los objetos
 
 }
 
@@ -528,8 +514,26 @@ void Resultados::ReservarMemoria (const Resultados& otro)
 {
     capacidad = otro.capacidad; // Copiamos la capacidad
     datos = new Resultado[capacidad]; // Reservamos memoria
-    usados = otro.usados; // Copiamos los usados
-   
+    usados = otro.usados; // Copiamos los usados   
+}
+
+/************************************************************/
+/************************************************************/
+// Pide memoria dado la capacidad
+// Parámetros: capacidad, capacidad deseada. Por defecto, TAM_BLOQUE
+
+void Resultados::ReservarMemoria (int capacidad_inicial)
+{
+    if (capacidad_inicial <= 0) // Si la capacidad es menor o igual a 0
+    {
+        capacidad = TAM_BLOQUE; // Inicializamos la capacidad
+    }
+    else // Si la capacidad es mayor que 0
+    {
+        capacidad = capacidad_inicial; // Inicializamos la capacidad
+    }
+    datos = new Resultado[capacidad]; // Reservamos memoria
+    usados = 0; // Inicializamos los usadoss
 }
 
 /************************************************************/

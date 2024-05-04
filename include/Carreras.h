@@ -71,13 +71,13 @@ public:
 	/***********************************************/
 	// getCapacidad
 	// Descripción: Devuelve la capacidad actual del objeto.
-	int Capacidad(void);
+	int Capacidad(void)const;
 
 	/***********************************************/
 	/***********************************************/
 	// getUsados
 	// Descripción: Devuelve la cantidad de elementos utilizados en el objeto.
-	int Usados(void);
+	int Usados(void)const;
 
 	/***********************************************/
 	/***********************************************/
@@ -313,6 +313,13 @@ private:
 	// Parámetros: otro (referencia), objeto que sirve de modelo.
 
 	void ReservarMemoria (const Carreras& otro);
+
+	/************************************************************/
+	/************************************************************/
+	// Pide memoria dado la capacidad
+	// Parámetros: capacidad, capacidad deseada. Por defecto, TAM_BLOQUE
+	
+	void ReservarMemoria (int capacidad_inicial=TAM_BLOQUE);
 
 	/************************************************************/
 	/************************************************************/

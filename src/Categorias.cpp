@@ -29,9 +29,7 @@ using namespace std;
 // Descripción: Crea un objeto Categorias vacío.
 Categorias::Categorias(void)
 {
-    capacidad = TAM_BLOQUE; // Inicializamos la capacidad
-    datos = new Categoria[capacidad]; // Reservamos memoria
-    usados = 0; // Inicializamos los usados
+    ReservarMemoria(); // Reservamos memoria
 }
 
 /***********************************************/
@@ -54,16 +52,7 @@ Categorias::Categorias(const Categorias& otro)
 //      capacidad_inicial: Capacidad inicial deseada.
 Categorias::Categorias(int capacidad_inicial)
 {
-    if (capacidad_inicial <= 0) // Si la capacidad es menor o igual a 0
-    {
-        capacidad = TAM_BLOQUE; // Inicializamos la capacidad
-    }
-    else // Si la capacidad es mayor que 0
-    {
-        capacidad = capacidad_inicial; // Inicializamos la capacidad
-    }
-    datos = new Categoria[capacidad]; // Reservamos memoria
-    usados = 0; // Inicializamos los usados
+    ReservarMemoria(capacidad_inicial); // Reservamos memoria
 }
 
 /***********************************************/
@@ -79,7 +68,7 @@ Categorias::~Categorias(void)
 /***********************************************/
 // getCapacidad
 // Descripción: Devuelve la capacidad actual del objeto.
-int Categorias::Capacidad(void)
+int Categorias::Capacidad(void) const
 {
     return capacidad; // Devolvemos la capacidad
 }
@@ -88,7 +77,7 @@ int Categorias::Capacidad(void)
 /***********************************************/
 // getUsados
 // Descripción: Devuelve la cantidad de elementos utilizados en el objeto.
-int Categorias:: Usados(void)
+int Categorias:: Usados(void) const
 {
     return usados; // Devolvemos los usados
 }
@@ -458,14 +447,11 @@ Categorias operator+(const Categorias uno, const Categorias& otro)
 // Devuelve: Un objeto Categorias con el Categoria añadido.
 Categorias operator+(const Categorias uno, const Categoria& otro)
 {
-    Categorias resultado = uno; // Copiamos el primer objeto
+    Categorias categoria; // Creamos un objeto Categorias
 
-    if (!(otro&&uno)) // si no está contenido
-    {
-        resultado.Aniade(otro); // Añadimos el objeto
-    }
+    categoria.Aniade(otro); // Añadimos el objeto
 
-    return resultado; // Devolvemos el resultado
+    return uno + categoria; // Concatenamos los objetos
 
 }
 
@@ -530,6 +516,25 @@ void Categorias::ReservarMemoria (const Categorias& otro)
     usados = otro.usados; // Copiamos los usados
    
 }
+
+/************************************************************/
+/************************************************************/
+// Pide memoria dado la capacidad
+// Parámetros: capacidad, capacidad deseada.
+void Categorias::ReservarMemoria (int capacidad_inicial)
+{
+    if (capacidad_inicial <= 0) // Si la capacidad es menor o igual a 0
+    {
+        capacidad = TAM_BLOQUE; // Inicializamos la capacidad
+    }
+    else // Si la capacidad es mayor que 0
+    {
+        capacidad = capacidad_inicial; // Inicializamos la capacidad
+    }
+    datos = new Categoria[capacidad]; // Reservamos memoria
+    usados = 0; // Inicializamos los usados
+}
+
 
 /************************************************************/
 /************************************************************/

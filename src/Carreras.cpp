@@ -29,9 +29,7 @@ using namespace std;
 // Descripción: Crea un objeto Carreras vacío.
 Carreras::Carreras(void)
 {
-    capacidad = TAM_BLOQUE; // Inicializamos la capacidad
-    datos = new Carrera[capacidad]; // Reservamos memoria
-    usados = 0; // Inicializamos los usados
+    ReservarMemoria(); // Reservamos memoria
 }
 
 /***********************************************/
@@ -54,16 +52,7 @@ Carreras::Carreras(const Carreras& otro)
 //      capacidad_inicial: Capacidad inicial deseada.
 Carreras::Carreras(int capacidad_inicial)
 {
-    if (capacidad_inicial <= 0) // Si la capacidad es menor o igual a 0
-    {
-        capacidad = TAM_BLOQUE; // Inicializamos la capacidad
-    }
-    else // Si la capacidad es mayor que 0
-    {
-        capacidad = capacidad_inicial; // Inicializamos la capacidad
-    }
-    datos = new Carrera[capacidad]; // Reservamos memoria
-    usados = 0; // Inicializamos los usados
+    ReservarMemoria(capacidad_inicial); // Reservamos memoria
 }
 
 /***********************************************/
@@ -79,7 +68,7 @@ Carreras::~Carreras(void)
 /***********************************************/
 // getCapacidad
 // Descripción: Devuelve la capacidad actual del objeto.
-int Carreras::Capacidad(void)
+int Carreras::Capacidad(void) const
 {
     return capacidad; // Devolvemos la capacidad
 }
@@ -88,7 +77,7 @@ int Carreras::Capacidad(void)
 /***********************************************/
 // getUsados
 // Descripción: Devuelve la cantidad de elementos utilizados en el objeto.
-int Carreras:: Usados(void)
+int Carreras:: Usados(void) const
 {
     return usados; // Devolvemos los usados
 }
@@ -238,9 +227,9 @@ string Carreras::ToString(const string titulo) const
 Carreras & Carreras::operator=(const Carreras& otro)
 {
     
-        LiberarMemoria(); // Liberamos la memoria
-        ReservarMemoria(otro); // Reservamos memoria
-        CopiarDatos(otro); // Copiamos los datos
+    LiberarMemoria(); // Liberamos la memoria
+    ReservarMemoria(otro); // Reservamos memoria
+    CopiarDatos(otro); // Copiamos los datos
     
     return *this; // Devolvemos el objeto actual
     
@@ -458,14 +447,11 @@ Carreras operator+(const Carreras uno, const Carreras& otro)
 // Devuelve: Un objeto Carreras con el Carrera añadido.
 Carreras operator+(const Carreras uno, const Carrera& otro)
 {
-    Carreras resultado = uno; // Copiamos el primer objeto
+    Carreras carrera; // Creamos un objeto Carreras
 
-    if (!(otro&&uno)) // si no está contenido
-    {
-        resultado.Aniade(otro); // Añadimos el objeto
-    }
+    carrera.Aniade(otro); // Añadimos el Carrera
 
-    return resultado; // Devolvemos el resultado
+    return uno + carrera; // Concatenamos los objetos
 
 }
 
@@ -530,6 +516,24 @@ void Carreras::ReservarMemoria (const Carreras& otro)
     datos = new Carrera[capacidad]; // Reservamos memoria
     usados = otro.usados; // Copiamos los usados
    
+}
+
+/************************************************************/
+/************************************************************/
+// Pide memoria dado la capacidad
+// Parámetros: capacidad, capacidad deseada.
+void Carreras::ReservarMemoria (int capacidad_inicial)
+{
+    if (capacidad_inicial <= 0) // Si la capacidad es menor o igual a 0
+    {
+        capacidad = TAM_BLOQUE; // Inicializamos la capacidad
+    }
+    else // Si la capacidad es mayor que 0
+    {
+        capacidad = capacidad_inicial; // Inicializamos la capacidad
+    }
+    datos = new Carrera[capacidad]; // Reservamos memoria
+    usados = 0; // Inicializamos los usados
 }
 
 /************************************************************/
