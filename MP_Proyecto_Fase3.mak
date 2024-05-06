@@ -5,11 +5,11 @@
 # PAOLO PUGA DE PATTO
 # PRIMERO B DE INGENIERÍA INFORMÁTICA
 #
-# Fichero: MP_Proyecto_Fase2.mak
+# Fichero: MP_Proyecto_Fase3.mak
 #
-# Makefile para la compilacion de MP_Proyecto_Fase2
+# Makefile para la compilacion de MP_Proyecto_Fase3
 #
-# Proyecto FASE 1
+# Proyecto FASE 3
 #
 ############################################################################
 
@@ -43,7 +43,7 @@ LIBS = -lCorredor -lCategoria -lResultado -lCarrera -lTiempo -lFecha -lutils \
 
 all:  preambulo \
 	  mr.proper \
-      $(BIN)/MP_Proyecto_Fase2 \
+      $(BIN)/MP_Proyecto_Fase3 \
 	  final
 
 preambulo:
@@ -72,7 +72,7 @@ final:
 
 # EJECUTABLES.......................................
 
-$(BIN)/MP_Proyecto_Fase2: $(OBJ)/main_MP_Proyecto_Fase2.o \
+$(BIN)/MP_Proyecto_Fase3: $(OBJ)/main_MP_Proyecto_Fase3.o \
     $(LIB_CLASES_UTILS)/libutils.a \
     $(LIB_CLASES_UTILS)/libCarrera.a \
     $(LIB_CLASES_UTILS)/libCategoria.a \
@@ -84,17 +84,17 @@ $(BIN)/MP_Proyecto_Fase2: $(OBJ)/main_MP_Proyecto_Fase2.o \
 	$(LIB_CLASES_UTILS)/libCategorias.a \
 	$(LIB_CLASES_UTILS)/libCorredores.a $(LIB_CLASES_UTILS)/libResultados.a $(LIB_CLASES_UTILS)/libTodosResultados.a                 
 	@echo 
-	@echo Creando ejecutable: MP_Proyecto_Fase2
+	@echo Creando ejecutable: MP_Proyecto_Fase3
 	@echo 
-	g++ -o $(BIN)/MP_Proyecto_Fase2 \
-		   $(OBJ)/main_MP_Proyecto_Fase2.o \
+	g++ -o $(BIN)/MP_Proyecto_Fase3 \
+		   $(OBJ)/main_MP_Proyecto_Fase3.o \
 	       $(LIBS_DIR) $(LIBS)
 # ...................................FIN EJECUTABLES
 
 
 # OBJETOS...........................................
 
-$(OBJ)/main_MP_Proyecto_Fase2.o: $(SRC)/main_MP_Proyecto_Fase2.cpp \
+$(OBJ)/main_MP_Proyecto_Fase3.o: $(SRC)/main_MP_Proyecto_Fase3.cpp \
 	$(INCLUDE_CLASES_UTILS)/utils.h \
     $(INCLUDE_CLASES_UTILS)/Carrera.h \
     $(INCLUDE_CLASES_UTILS)/Categoria.h \
@@ -107,10 +107,10 @@ $(OBJ)/main_MP_Proyecto_Fase2.o: $(SRC)/main_MP_Proyecto_Fase2.cpp \
 	$(INCLUDE_CLASES_UTILS)/Corredores.h \
 	$(INCLUDE_CLASES_UTILS)/Resultados.h $(INCLUDE_CLASES_UTILS)/TodosResultados.h                    
 	@echo 
-	@echo Creando objeto: main_MP_Proyecto_Fase2.o
+	@echo Creando objeto: main_MP_Proyecto_Fase3.o
 	@echo 
-	g++ -c -o $(OBJ)/main_MP_Proyecto_Fase2.o \
-		$(SRC)/main_MP_Proyecto_Fase2.cpp \
+	g++ -c -o $(OBJ)/main_MP_Proyecto_Fase3.o \
+		$(SRC)/main_MP_Proyecto_Fase3.cpp \
 		-I$(INCLUDE_CLASES_UTILS) -std=c++14
 	      
 # .......................................FIN OBJETOS
@@ -380,7 +380,7 @@ clean: clean-objs clean-libs
 clean-objs: 
 	@echo
 	@echo Borrando objetos de $(PROYECTO)...
-	-rm $(OBJ)/main_MP_Proyecto_Fase2.o
+	-rm $(OBJ)/main_MP_Proyecto_Fase3.o
 	-rm $(OBJ_CLASES_UTILS)/utils.o 
 	-rm $(OBJ_CLASES_UTILS)/Fecha.o 
 	-rm $(OBJ_CLASES_UTILS)/Tiempo.o
@@ -416,7 +416,7 @@ clean-libs:
 
 clean-bins : 
 	@echo Borrando ejecutables de $(PROYECTO)...
-	-rm $(BIN)/MP_Proyecto_Fase2
+	-rm $(BIN)/MP_Proyecto_Fase3
 	@echo ...Borrados ejecutables de la sesion de $(PROYECTO)
 
 mr.proper:  clean-objs clean-libs clean-bins

@@ -5,11 +5,11 @@
 // (C) FRANCISCO JOSÉ CORTIJO BON
 // DEPARTAMENTO DE CIENCIAS DE LA COMPUTACIÓN E INTELIGENCIA ARTIFICIAL
 // 
-// Fichero: main_MP_Proyecto_Fase2.cpp
+// Fichero: main_MP_Proyecto_Fase3.cpp
 //
 // Función main del proyecto. 
 //
-// Proyecto. FASE 02. 
+// Proyecto. FASE 03. 
 //
 /***************************************************************************/
 /***************************************************************************/
@@ -41,7 +41,7 @@ using namespace std;
 /***************************************************************************/
 /***************************************************************************/
 
-string Cabecera (const char * titulo);
+string Cabecera  (const char * titulo);
 
 /***************************************************************************/
 /***************************************************************************/
@@ -57,13 +57,6 @@ int main()
 
 	// Terminador para los datos leidos/escritos 
 	const string TERMINADOR = "FIN";
-
-
-
-	cout << endl; 
-	cout << "Hoy es " << Fecha().ToString(true) 
-	     << " - " << Tiempo().ToString() << endl; 
-	cout << endl; 
 
 	
 	//......................................................................
@@ -103,22 +96,23 @@ int main()
 	Carreras coleccion_carreras; // Crear colección (vacía)
 
 
-	cout << Cabecera ("CARRERAS:");
-
 	getline(cin, linea); // Lectura adelantada
 
 	while (linea != TERMINADOR) {
 					
 		Carrera una_carrera (linea);
 
-		// Añadir el dato "Carrera" leido a la colección  
-		coleccion_carreras.Aniade (una_carrera);
+		// Añadir el dato "Carrera" leido a la colección 
+		coleccion_carreras += una_carrera; // Operator += 
 
-		
 		// Leer la siguiente linea 
 		getline(cin, linea); 
 		
 	} // while (linea != TERMINADOR)
+
+
+
+	cout << Cabecera ("CARRERAS:");
 
 	cout << endl;
 	cout << coleccion_carreras.ToString(); 
@@ -138,7 +132,6 @@ int main()
 	 
 	Corredores coleccion_corredores; // Crear colección (vacía)
 
-	cout << Cabecera ("CORREDORES:");
 
 	getline(cin, linea); // Lectura adelantada
 
@@ -146,13 +139,16 @@ int main()
 					
 		Corredor un_corredor (linea);
 
-		// Añadir el dato "Corredor" leido a la colección  
-		coleccion_corredores.Aniade (un_corredor);
+		// Añadir el dato "Corredor" leido a la colección 
+		coleccion_corredores += un_corredor; // Operator += 
 
 		// Leer la siguiente linea 
 		getline(cin, linea); 
 		
 	} // while (linea != TERMINADOR)
+
+
+	cout << Cabecera ("CORREDORES:");
 
 	cout << endl;
 	cout << coleccion_corredores.ToString(); 
@@ -181,7 +177,7 @@ int main()
 		Categoria una_categoria (linea);
 
 		// Añadir el dato "Categoria" leido a la colección  
-		coleccion_categorias.Aniade (una_categoria);
+		coleccion_categorias += una_categoria; // Operator += 
 
 		// Leer la siguiente linea 
 		getline(cin, linea); 
@@ -230,7 +226,7 @@ int main()
 			Resultado un_resultado (linea);
 
 			// Añadir el dato "Resultado" leido a la colección  
-			resultados_carrera_i.Aniade (un_resultado);
+			resultados_carrera_i += un_resultado;
 
 			// Leer la siguiente linea 
 			getline(cin, linea); 
@@ -250,7 +246,7 @@ int main()
 
 
 		// Añadir "coleccion_resultados" a "todos_resultados"
-		todos_resultados.Aniade(resultados_carrera_i); 
+		todos_resultados += resultados_carrera_i; 
 		
 	} // for i 
 
@@ -267,94 +263,6 @@ int main()
 
 
 
-
-	//......................................................................
-	//......................................................................
-	// PRUEBAS DE LOS OPERADORES [] y ()
-	//......................................................................
-	//......................................................................
-	
-
-	cout << Cabecera ("PRUEBAS DE LOS OPERADORES [] y ():");
-
-
-	cout << endl; 
-	cout << "CARRERAS" << endl; 
-	cout << endl; 
-
-	for (int i=1; i<=coleccion_carreras.Usados(); i++) {
-		Carrera una_carrera = coleccion_carreras[i]; 
-		cout << "[" << setw(3)<< i << "].- "<< una_carrera.GetNombre() << endl; 
-	}
-	cout << endl; 
-	for (int i=1; i<=coleccion_carreras.Usados(); i++) {
-		Carrera una_carrera = coleccion_carreras(i); 
-		cout << "(" << setw(3)<< i << ").- "<< una_carrera.GetNombre() << endl; 
-	}
-	cout << endl; 
-
-	cout << endl; 
-	cout << "CORREDORES" << endl; 
-	cout << endl; 
-
-	for (int i=1; i<=coleccion_corredores.Usados(); i++) {
-		Corredor un_corredor = coleccion_corredores[i]; 
-		cout << "[" << setw(3) << i << "].- " 
-		     << setw(4) << un_corredor.GetDorsal() << endl; 
-	}
-	cout << endl; 
-	for (int i=1; i<=coleccion_corredores.Usados(); i++) {
-		Corredor un_corredor = coleccion_corredores(i); 
-		cout << "(" << setw(3) << i << ").- "
-		     << setw(4) << un_corredor.GetDorsal() << endl; 
-	}
-	cout << endl; 
-
-	cout << endl; 
-	cout << "CATEGORIAS" << endl; 
-	cout << endl; 
-
-	for (int i=1; i<=coleccion_categorias.Usados(); i++) {
-		Categoria una_categoria = coleccion_categorias[i]; 
-		cout << "[" << setw(3) << i << "].- " 
-		     << setw(4) << una_categoria.GetIdCategoria() << endl; 
-	}
-	cout << endl; 
-	for (int i=1; i<=coleccion_categorias.Usados(); i++) {
-		Categoria una_categoria = coleccion_categorias(i); 
-		cout << "(" << setw(3) << i << ").- "
-		     << setw(4) << una_categoria.GetIdCategoria() << endl; 
-	}
-	cout << endl; 
-
-	cout << endl;
-	cout << "PRUEBAS DE RESULTADOS/TODOS RESULTADOS" << endl; 
-	cout << endl; 
-
-	for (int i=1; i<=todos_resultados.Usados(); i++) {
-
-		cout << endl; 
-		cout << "CINCO PRIMEROS RESULTADOS DE CARRERA "<< setw(2) << i << endl; 
-		cout << endl; 
-
-		for (int j=1; j<=5; j++) {
-
-			cout << "[" << setw(3) << i << "]["<< setw(3) << j << "] --> "
-		    	 << setw(4) << todos_resultados[i][j].GetDorsal() << endl; 
-
-			cout << "(" << setw(3) << i << ", "<< setw(3) << j << ") --> "
-		    	 << setw(4) << todos_resultados(i,j).GetDorsal() << endl; 
-		}
-		cout << endl; 
-		cout << "RESULTADOS DE CARRERA " << setw(2) << i << endl; 
-		cout << endl; 
-
-		cout << todos_resultados[i].ToString();
-		cout << endl; 
-
-	}
-	cout << endl; 
-	
 	return 0;
 }
 
@@ -378,6 +286,16 @@ string Cabecera (const char * titulo)
 	cad = cad + cad_guiones + "\n";
 
 	return cad; 
+}
+
+/***************************************************************************/
+/***************************************************************************/
+
+void Intercambia (Corredor & uno, Corredor & otro)
+{
+	Corredor tmp = uno;
+	uno = otro; 
+	otro = tmp; 
 }
 
 /***************************************************************************/
