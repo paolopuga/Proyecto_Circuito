@@ -189,6 +189,42 @@ public:
 
 	/***********************************************/
 	/***********************************************/
+	// Operador de comparación <
+	// Descripción: Compara dos objetos Corredores.
+	// Argumentos:
+	//      otro: Objeto Corredores con el que se compara.
+	// Devuelve: true si el objeto actual es menor que el otro.
+	bool operator<(const Corredores& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Operador de comparación >
+	// Descripción: Compara dos objetos Corredores.
+	// Argumentos:
+	//      otro: Objeto Corredores con el que se compara.
+	// Devuelve: true si el objeto actual es mayor que el otro.
+	bool operator>(const Corredores& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Operador de comparación <=
+	// Descripción: Compara dos objetos Corredores.
+	// Argumentos:
+	//      otro: Objeto Corredores con el que se compara.
+	// Devuelve: true si el objeto actual es menor o igual que el otro.
+	bool operator<=(const Corredores& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Operador de comparación >=
+	// Descripción: Compara dos objetos Corredores.
+	// Argumentos:
+	//      otro: Objeto Corredores con el que se compara.
+	// Devuelve: true si el objeto actual es mayor o igual que el otro.
+	bool operator>=(const Corredores& otro) const;
+
+	/***********************************************/
+	/***********************************************/
 	// Operador binario *
 	// Descripción: Realiza la intersección de dos objetos Corredores.
 	// Argumentos:

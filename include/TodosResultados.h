@@ -195,6 +195,42 @@ public:
 
 	/***********************************************/
 	/***********************************************/
+	// Operador de comparación <
+	// Descripción: Compara dos objetos TodosResultados.
+	// Argumentos:
+	//      otro: Objeto TodosResultados con el que se compara.
+	// Devuelve: true si el objeto actual es menor que el otro.
+	bool operator<(const TodosResultados& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Operador de comparación >
+	// Descripción: Compara dos objetos TodosResultados.
+	// Argumentos:
+	//      otro: Objeto TodosResultados con el que se compara.
+	// Devuelve: true si el objeto actual es mayor que el otro.
+	bool operator>(const TodosResultados& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Operador de comparación <=
+	// Descripción: Compara dos objetos TodosResultados.
+	// Argumentos:
+	//      otro: Objeto TodosResultados con el que se compara.
+	// Devuelve: true si el objeto actual es menor o igual que el otro.
+	bool operator<=(const TodosResultados& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Operador de comparación >=
+	// Descripción: Compara dos objetos TodosResultados.
+	// Argumentos:
+	//      otro: Objeto TodosResultados con el que se compara.
+	// Devuelve: true si el objeto actual es mayor o igual que el otro.
+	bool operator>=(const TodosResultados& otro) const;
+	
+	/***********************************************/
+	/***********************************************/
 	// Operador binario *
 	// Descripción: Realiza la intersección de dos objetos TodosResultados.
 	// Argumentos:

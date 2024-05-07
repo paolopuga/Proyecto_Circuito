@@ -226,10 +226,12 @@ string Categorias::ToString(const string titulo) const
 // Devuelve: Una referencia al objeto actual después de la asignación.
 Categorias & Categorias::operator=(const Categorias& otro)
 {
-    
+    if(*this != otro) // Si no son el mismo objeto
+    {
         LiberarMemoria(); // Liberamos la memoria
         ReservarMemoria(otro); // Reservamos memoria
-        CopiarDatos(otro); // Copiamos los datos
+        CopiarDatos(otro); // Copiamos los datosl
+    }
     
     return *this; // Devolvemos el objeto actual
     
@@ -295,6 +297,41 @@ bool Categorias::operator!=(const Categorias& otro) const
     return !EsIgualA(otro); // Devolvemos si son distintos
 }
 
+/***********************************************/
+/***********************************************/
+// Operador de comparación <
+// Descripción: Compara dos objetos Categorias.
+// Argumentos:
+//      otro: Objeto Categorias con el que se compara.
+// Devuelve: true si el objeto actual es menor que el otro.
+bool Categorias::operator<(const Categorias& otro) const
+{
+    return (Usados() < otro.Usados()); // Devolvemos si es menor
+}
+
+/***********************************************/
+/***********************************************/
+// Operador de comparación >
+// Descripción: Compara dos objetos Categorias.
+// Argumentos:
+//      otro: Objeto Categorias con el que se compara.
+// Devuelve: true si el objeto actual es mayor que el otro.
+bool Categorias::operator>(const Categorias& otro) const
+{
+    return (Usados() > otro.Usados()); // Devolvemos si es mayor
+}
+
+/***********************************************/
+/***********************************************/
+// Operador de comparación <=
+// Descripción: Compara dos objetos Categorias.
+// Argumentos:
+//      otro: Objeto Categorias con el que se compara.
+// Devuelve: true si el objeto actual es menor o igual que el otro.
+bool Categorias::operator<=(const Categorias& otro) const
+{
+    return (Usados() <= otro.Usados()); // Devolvemos si es menor o igual
+}
 
 /***********************************************/
 /***********************************************/

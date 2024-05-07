@@ -189,6 +189,42 @@ public:
 
 	/***********************************************/
 	/***********************************************/
+	// Operador de comparación <
+	// Descripción: Compara dos objetos Categorias.
+	// Argumentos:
+	//      otro: Objeto Categorias con el que se compara.
+	// Devuelve: true si el objeto actual es menor que el otro.
+	bool operator<(const Categorias& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Operador de comparación >
+	// Descripción: Compara dos objetos Categorias.
+	// Argumentos:
+	//      otro: Objeto Categorias con el que se compara.
+	// Devuelve: true si el objeto actual es mayor que el otro.
+	bool operator>(const Categorias& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Operador de comparación <=
+	// Descripción: Compara dos objetos Categorias.
+	// Argumentos:
+	//      otro: Objeto Categorias con el que se compara.
+	// Devuelve: true si el objeto actual es menor o igual que el otro.
+	bool operator<=(const Categorias& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Operador de comparación >=
+	// Descripción: Compara dos objetos Categorias.
+	// Argumentos:
+	//      otro: Objeto Categorias con el que se compara.
+	// Devuelve: true si el objeto actual es mayor o igual que el otro.
+	bool operator>=(const Categorias& otro) const;
+	
+	/***********************************************/
+	/***********************************************/
 	// Operador binario *
 	// Descripción: Realiza la intersección de dos objetos Categorias.
 	// Argumentos:
