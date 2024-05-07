@@ -93,14 +93,6 @@ public:
 
 	/***********************************************/
 	/***********************************************/
-	// Aniade
-	// Descripción: Añade un objeto Carrera al final del objeto.
-	// Argumentos:
-	//      objeto: Objeto Carrera que se añade al final.
-	void Aniade(const Carrera& objeto);
-
-	/***********************************************/
-	/***********************************************/
 	// Inserta 
 	// Descripción: Inserta un objeto Carrera en una posición específica.
 	// Argumentos:
@@ -402,6 +394,13 @@ private:
 	// Devuelve: true si son iguales, false en caso contrario.
 	bool EsIgualA(const Carreras& otro) const;
 
+	/***********************************************/
+	/***********************************************/
+	// Aniade
+	// Descripción: Añade un objeto Carrera al final del objeto.
+	// Argumentos:
+	//      objeto: Objeto Carrera que se añade al final.
+	void Aniade(const Carrera& objeto);
 };
 
 #endif

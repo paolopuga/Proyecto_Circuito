@@ -123,22 +123,6 @@ void Categorias::Elimina(const int num_casilla)
 
 /***********************************************/
 /***********************************************/
-// Aniade
-// Descripción: Añade un objeto Categoria al final del objeto.
-// Argumentos:
-//      objeto: Objeto Categoria que se añade al final.
-void Categorias::Aniade(const Categoria& objeto)
-{
-    if (usados == capacidad) // Si no hay espacio
-    {
-        Redimensiona(); // Redimensionamos
-    }
-    datos[usados] = objeto; // Añadimos el objeto
-    usados++; // Aumentamos los usados
-}
-
-/***********************************************/
-/***********************************************/
 // Inserta
 // Descripción: Inserta un objeto Categoria en una posición específica.
 // Argumentos:
@@ -503,7 +487,11 @@ Categorias operator+(const Categorias uno, const Categoria& otro)
 // Devuelve: Un objeto Categorias con el Categoria añadido.
 Categorias operator+(const Categoria& uno, const Categorias otro)
 {
-    return otro + uno; // Invertimos el orden
+    Categorias categoria; // Creamos un objeto Categorias
+
+    categoria.Aniade(uno); // Añadimos el objeto
+
+    return categoria + otro; // Concatenamos los objetos
 }
 
 /***********************************************/
@@ -668,4 +656,20 @@ bool Categorias:: EsIgualA(const Categorias& otro) const
     int tamanio_interseccion = (*this * otro).Usados(); // Intersectamos 
 
     return (tamanio_union==tamanio_interseccion); // Devolvemos si son iguales
+}
+
+/***********************************************/
+/***********************************************/
+// Aniade
+// Descripción: Añade un objeto Categoria al final del objeto.
+// Argumentos:
+//      objeto: Objeto Categoria que se añade al final.
+void Categorias::Aniade(const Categoria& objeto)
+{
+    if (usados == capacidad) // Si no hay espacio
+    {
+        Redimensiona(); // Redimensionamos
+    }
+    datos[usados] = objeto; // Añadimos el objeto
+    usados++; // Aumentamos los usados
 }

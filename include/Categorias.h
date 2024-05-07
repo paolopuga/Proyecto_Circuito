@@ -93,14 +93,6 @@ public:
 
 	/***********************************************/
 	/***********************************************/
-	// Aniade
-	// Descripción: Añade un objeto Categoria al final del objeto.
-	// Argumentos:
-	//      objeto: Objeto Categoria que se añade al final.
-	void Aniade(const Categoria& objeto);
-
-	/***********************************************/
-	/***********************************************/
 	// Inserta 
 	// Descripción: Inserta un objeto Categoria en una posición específica.
 	// Argumentos:
@@ -405,6 +397,14 @@ private:
 	
 	bool EsIgualA(const Categorias& otro) const;
 
+	/***********************************************/
+	/***********************************************/
+	// Aniade
+	// Descripción: Añade un objeto Categoria al final del objeto.
+	// Argumentos:
+	//      objeto: Objeto Categoria que se añade al final.
+	
+	void Aniade(const Categoria& objeto);
 };
 
 #endif

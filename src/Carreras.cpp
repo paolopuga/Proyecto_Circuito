@@ -123,22 +123,6 @@ void Carreras::Elimina(const int num_casilla)
 
 /***********************************************/
 /***********************************************/
-// Aniade
-// Descripción: Añade un objeto Carrera al final del objeto.
-// Argumentos:
-//      objeto: Objeto Carrera que se añade al final.
-void Carreras::Aniade(const Carrera& objeto)
-{
-    if (usados == capacidad) // Si no hay espacio
-    {
-        Redimensiona(); // Redimensionamos
-    }
-    datos[usados] = objeto; // Añadimos el objeto
-    usados++; // Aumentamos los usados
-}
-
-/***********************************************/
-/***********************************************/
 // Inserta
 // Descripción: Inserta un objeto Carrera en una posición específica.
 // Argumentos:
@@ -515,7 +499,11 @@ Carreras operator+(const Carreras uno, const Carrera& otro)
 // Devuelve: Un objeto Carreras con el Carrera añadido.
 Carreras operator+(const Carrera& uno, const Carreras otro)
 {
-    return otro + uno; // Invertimos el orden
+    Carreras carrera; // Creamos un objeto Carreras
+
+    carrera.Aniade(uno); // Añadimos el Carrera
+
+    return carrera + otro; // Concatenamos los objetos
 }
 
 /***********************************************/
@@ -680,4 +668,20 @@ bool Carreras:: EsIgualA(const Carreras& otro) const
     int tamanio_interseccion = (*this * otro).Usados(); // Intersectamos 
 
     return (tamanio_union==tamanio_interseccion); // Devolvemos si son iguales
+}
+
+/***********************************************/
+/***********************************************/
+// Aniade
+// Descripción: Añade un objeto Carrera al final del objeto.
+// Argumentos:
+//      objeto: Objeto Carrera que se añade al final.
+void Carreras::Aniade(const Carrera& objeto)
+{
+    if (usados == capacidad) // Si no hay espacio
+    {
+        Redimensiona(); // Redimensionamos
+    }
+    datos[usados] = objeto; // Añadimos el objeto
+    usados++; // Aumentamos los usados
 }

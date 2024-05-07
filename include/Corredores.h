@@ -93,14 +93,6 @@ public:
 
 	/***********************************************/
 	/***********************************************/
-	// Aniade
-	// Descripción: Añade un objeto Corredor al final del objeto.
-	// Argumentos:
-	//      objeto: Objeto Corredor que se añade al final.
-	void Aniade(const Corredor& objeto);
-
-	/***********************************************/
-	/***********************************************/
 	// Inserta 
 	// Descripción: Inserta un objeto Corredor en una posición específica.
 	// Argumentos:
@@ -402,6 +394,14 @@ private:
 	// Devuelve: true si son iguales, false en caso contrario.
 	bool EsIgualA(const Corredores& otro) const;
 
+	/***********************************************/
+	/***********************************************/
+	// Aniade
+	// Descripción: Añade un objeto Corredor al final del objeto.
+	// Argumentos:
+	//      objeto: Objeto Corredor que se añade al final.
+	void Aniade(const Corredor& objeto);
+	
 };
 
 #endif

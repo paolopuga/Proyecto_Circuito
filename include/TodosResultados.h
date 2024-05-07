@@ -93,14 +93,6 @@ public:
 
 	/***********************************************/
 	/***********************************************/
-	// Aniade
-	// Descripción: Añade un objeto Resultados al final del objeto.
-	// Argumentos:
-	//      objeto: Objeto Resultados que se añade al final.
-	void Aniade(const Resultados& objeto);
-
-	/***********************************************/
-	/***********************************************/
 	// Inserta 
 	// Descripción: Inserta un objeto Resultados en una posición específica.
 	// Argumentos:
@@ -414,6 +406,14 @@ private:
 	//      otro: Objeto TodosResultados con el que se compara.
 	// Devuelve: true si son iguales, false en caso contrario.
 	bool EsIgualA(const TodosResultados& otro) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Aniade
+	// Descripción: Añade un objeto Resultados al final del objeto.
+	// Argumentos:
+	//      objeto: Objeto Resultados que se añade al final.
+	void Aniade(const Resultados& objeto);
 
 };
 

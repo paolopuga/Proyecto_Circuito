@@ -123,22 +123,6 @@ void TodosResultados::Elimina(const int num_casilla)
 
 /***********************************************/
 /***********************************************/
-// Aniade
-// Descripción: Añade un objeto Resultados al final del objeto.
-// Argumentos:
-//      objeto: Objeto Resultados que se añade al final.
-void TodosResultados::Aniade(const Resultados& objeto)
-{
-    if (usados < capacidad) // Si hay espacio
-    {
-        datos[usados] = objeto; // Añadimos el objeto
-        usados++; // Aumentamos los usados
-    }
-    
-}
-
-/***********************************************/
-/***********************************************/
 // Inserta
 // Descripción: Inserta un objeto Resultados en una posición específica.
 // Argumentos:
@@ -494,11 +478,11 @@ TodosResultados operator+(const TodosResultados uno,
 // Devuelve: Un objeto TodosResultados con el Resultados añadido.
 TodosResultados operator+(const TodosResultados uno, const Resultados& otro)
 {
-    TodosResultados Resultados; // Creamos un objeto vacío
+    TodosResultados resultados; // Creamos un objeto vacío
 
-    Resultados.Aniade(otro); // Añadimos el Resultados
+    resultados.Aniade(otro); // Añadimos el Resultados
 
-    return uno + Resultados; // Concatenamos los objetos
+    return uno + resultados; // Concatenamos los objetos
 
 }
 
@@ -513,7 +497,11 @@ TodosResultados operator+(const TodosResultados uno, const Resultados& otro)
 // Devuelve: Un objeto TodosResultados con el Resultados añadido.
 TodosResultados operator+(const Resultados& uno, const TodosResultados otro)
 {
-    return otro + uno; // Invertimos el orden
+    TodosResultados resultados; // Creamos un objeto vacío
+
+    resultados.Aniade(uno); // Añadimos el Resultados
+
+    return resultados + otro; // Concatenamos los objetos
 }
 
 /***********************************************/
@@ -639,4 +627,19 @@ bool TodosResultados:: EsIgualA(const TodosResultados& otro) const
     int tamanio_interseccion = (*this * otro).Usados(); // Intersectamos 
 
     return (tamanio_union==tamanio_interseccion); // Devolvemos si son iguales
+}
+
+/***********************************************/
+/***********************************************/
+// Aniade
+// Descripción: Añade un objeto Resultados al final del objeto.
+// Argumentos:
+//      objeto: Objeto Resultados que se añade al final.
+void TodosResultados::Aniade(const Resultados& objeto)
+{
+    if (usados < capacidad) // Si hay espacio
+    {
+        datos[usados] = objeto; // Añadimos el objeto
+        usados++; // Aumentamos los usados
+    }   
 }

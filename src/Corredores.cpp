@@ -121,21 +121,7 @@ void Corredores::Elimina(const int num_casilla)
 
 }
 
-/***********************************************/
-/***********************************************/
-// Aniade
-// Descripción: Añade un objeto Corredor al final del objeto.
-// Argumentos:
-//      objeto: Objeto Corredor que se añade al final.
-void Corredores::Aniade(const Corredor& objeto)
-{
-    if (usados == capacidad) // Si no hay espacio
-    {
-        Redimensiona(); // Redimensionamos
-    }
-    datos[usados] = objeto; // Añadimos el objeto
-    usados++; // Aumentamos los usados
-}
+
 
 /***********************************************/
 /***********************************************/
@@ -503,7 +489,11 @@ Corredores operator+(const Corredores uno, const Corredor& otro)
 // Devuelve: Un objeto Corredores con el Corredor añadido.
 Corredores operator+(const Corredor& uno, const Corredores otro)
 {
-    return otro + uno; // Invertimos el orden
+    Corredores corredor; // Creamos un objeto vacío
+
+    corredor.Aniade(uno); // Añadimos el corredor
+
+    return corredor + otro; // Concatenamos los objetos
 }
 
 /***********************************************/
@@ -668,4 +658,20 @@ bool Corredores:: EsIgualA(const Corredores& otro) const
     int tamanio_interseccion = (*this * otro).Usados(); // Intersectamos 
 
     return (tamanio_union==tamanio_interseccion); // Devolvemos si son iguales
+}
+
+/***********************************************/
+/***********************************************/
+// Aniade
+// Descripción: Añade un objeto Corredor al final del objeto.
+// Argumentos:
+//      objeto: Objeto Corredor que se añade al final.
+void Corredores::Aniade(const Corredor& objeto)
+{
+    if (usados == capacidad) // Si no hay espacio
+    {
+        Redimensiona(); // Redimensionamos
+    }
+    datos[usados] = objeto; // Añadimos el objeto
+    usados++; // Aumentamos los usados
 }

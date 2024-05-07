@@ -89,15 +89,7 @@ public:
 	/***********************************************/
 	// EliminaTodos
 	// Descripción: Elimina todos los elementos, dejándolo vacío.
-	void EliminaTodos(void);
-
-	/***********************************************/
-	/***********************************************/
-	// Aniade
-	// Descripción: Añade un objeto Resultado al final del objeto.
-	// Argumentos:
-	//      objeto: Objeto Resultado que se añade al final.
-	void Aniade(const Resultado& objeto);
+	void EliminaTodos(void);	
 
 	/***********************************************/
 	/***********************************************/
@@ -402,6 +394,14 @@ private:
 	// Devuelve: true si son iguales, false en caso contrario.
 	bool EsIgualA(const Resultados& otro) const;
 
+	/***********************************************/
+	/***********************************************/
+	// Aniade
+	// Descripción: Añade un objeto Resultado al final del objeto.
+	// Argumentos:
+	//      objeto: Objeto Resultado que se añade al final.
+	void Aniade(const Resultado& objeto);
+	
 };
 
 #endif
