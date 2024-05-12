@@ -421,7 +421,7 @@ bool operator&&(const TodosResultados& uno, const Resultado otro)
 {
     Resultados Resultados_nuevo; // creo un objeto Resultados
 
-    Resultados_nuevo.Aniade(otro); // Aniado el unico Resultados
+    Resultados_nuevo+=otro; // Aniado el unico Resultados
 
     return (uno&&otro); // devuelvo la comparación con Resultados
 }
