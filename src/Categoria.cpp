@@ -17,9 +17,10 @@
 #include <iostream>
 #include <cstring>
 #include <iomanip>
+#include <sstream>
+#include <string>
 
 #include "Categoria.h"
-#include "utils.h"
 
 /******************CONSTRUCTORES**********************/
 
@@ -39,43 +40,40 @@ Categoria::Categoria(string linea, char delimitador) {
     // Declaro un string para campo
     string campo1, campo2, campo3, campo4, campo5;
     
-    /**********************************************************/
-    // Busco la posicion del delimitador para separar la cadena
-    size_t pos1 = linea.find(delimitador);
-    campo1 = linea.substr(0,pos1); // separo el campo 
-    rem_se_ext(campo1); // quito los espacios en blanco
-    linea = linea.substr(pos1+1); // renuevo la linea quitando el separador
+    // Usamos flujos para separar los campos
+    istringstream iss(linea);
 
-    //Repito el primer proceso para todos los campos
-
-    size_t pos2 = linea.find(delimitador);
-    campo2 = linea.substr(0,pos2);
-    rem_se_ext(campo2);
-    linea = linea.substr(pos2+1);
-
-    size_t pos3 = linea.find(delimitador);
-    campo3 = linea.substr(0,pos3);
-    rem_se_ext(campo3);
-    linea = linea.substr(pos3+1);
-
-    size_t pos4 = linea.find(delimitador);
-    campo4 = linea.substr(0,pos4);
-    rem_se_ext(campo4);
-    linea = linea.substr(pos4+1);
-
-    size_t pos5 = linea.find(delimitador);
-    campo5 = linea.substr(0,pos5);
-    rem_se_ext(campo5);
-
+    getline(iss, campo1, delimitador);
+    getline(iss, campo2, delimitador);
+    getline(iss, campo3, delimitador);
+    getline(iss, campo4, delimitador);
+    getline(iss, campo5, delimitador);
    
     /*********************************************/
-    // Inicializo los campos
+    // Inicializo los campos numericos con stoi
     IdCategoria = stoi(campo1);
-    Denominacion = campo2;
-    Sexo = campo3[0];
+
+    // Inicializo los campos de tipo Fecha
     FechaInicial = Fecha(campo4);
     FechaFinal = Fecha(campo5);
     
+    // Inicializo los campos de tipo string    
+    istringstream iss2(campo2);
+    while (iss2 >> campo2) {
+        Denominacion += campo2 + " ";
+    }
+    Denominacion.pop_back(); // quito el último espacio
+
+    string sexoespacios;
+
+    istringstream iss3(campo3);
+    while (iss3 >> campo3) {
+        sexoespacios+= campo3 + " ";
+    }
+    sexoespacios.pop_back(); // quito el último espacio
+
+    Sexo = sexoespacios[0];
+
 }
 
 /***********************************************/
@@ -163,29 +161,60 @@ void Categoria::SetFechaFinal(Fecha fecha_final) {
 // Imprime los campos de Categoria
 // no recibe nada pero usa los métodos de formateo de utils
 //
+// Argumentos:
+//      nombre: nombre de la Categoria
 // Devuelve:
-//      Categoria en formato string
-string Categoria::ToString()const{
-  
-    // Diferencio el sexo
+//      Carrera en formato string
+string Categoria::ToString (const string nombre) const
+{
+    // inicialio el flujo de salida
+	ostringstream oss;
 
-    string sex_comp;
+	// Establezco las flags
+	oss.setf(ios::fixed);
+	oss.setf(ios::showpoint);
+	oss.precision(3);
+	
+	// Imprimo los campos
+	oss << setw(2) << IdCategoria << " ";
+    oss << setw(10) << right << Denominacion << " ";
+    
+    if (Sexo == 'H') {
+        oss << setw(7) << left << "HOMBRE" << " ";
+    } else {
+        oss << setw(7) << left << "MUJER" << " ";
+    }
 
-    if (Sexo == 'H')
-    {
-        sex_comp = "HOMBRE";
-    }else
-        {
-            sex_comp = "MUJER";
-        }
+    oss << "[" << FechaInicial.GetAnio() << " - " << FechaFinal.GetAnio() << "]" ;
 
-    // Formateo los campos
-    string campo_1 = FormatInt(IdCategoria,2) + " ";
-    string campo_2 = FormatString(Denominacion, 10) + " ";
-    string campo_3 = FormatString(sex_comp, 7) + " ";
-    string campo_4 = "De "+ FechaInicial.ToString(true) + " ";
-    string campo_5 = "a "+ FechaFinal.ToString(true);
+	return oss.str(); // Devuelvo el flujo formato string
+}
 
-    // Devuelvo la concatenacion
-    return campo_1 + campo_2 + campo_3 + campo_4 + campo_5;
+/***********************************************/
+// Operador >>
+// Argumentos:
+//      objeto: objeto a inicilizar
+// Inicializa los campos
+istream & operator >> (istream & in, Categoria& objeto)
+{
+    string linea;
+    getline(in, linea);
+    objeto = Categoria(linea);
+    return in;
+}
+
+/**********************************************/
+// Operator <<
+// Argumentos:
+//      objeto: objeto a mostrar
+// devuelve un flujo con el objeto
+ostream & operator << (ostream &out, Categoria & objeto)
+{
+    out << objeto.IdCategoria << objeto.DELIMITADOR;
+    out << objeto.Denominacion << objeto.DELIMITADOR;
+    out << objeto.Sexo << objeto.DELIMITADOR;
+    out << objeto.FechaInicial << objeto.DELIMITADOR;
+    out << objeto.FechaFinal << objeto.DELIMITADOR;
+
+    return out;
 }

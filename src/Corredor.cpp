@@ -19,7 +19,6 @@
 #include <iomanip>
 
 #include "Corredor.h"
-#include "utils.h"
 #include "Fecha.h"
 
 /******************CONSTRUCTORES**********************/
@@ -40,50 +39,53 @@ Corredor::Corredor(string linea, char delimitador) {
     // Declaro un string para campo
     string campo1, campo2, campo3, campo4, campo5, campo6;
     
-    /**********************************************************/
-    // Busco la posicion del delimitador para separar la cadena
-    size_t pos1 = linea.find(delimitador);
-    campo1 = linea.substr(0,pos1); // separo el campo 
-    rem_se_ext(campo1); // quito los espacios en blanco
-    linea = linea.substr(pos1+1); // renuevo la linea quitando el separador
+    // Usamos flujos para separar los campos
+    istringstream iss(linea);
 
+    getline(iss, campo1, delimitador);
+    getline(iss, campo2, delimitador);
+    getline(iss, campo3, delimitador);
+    getline(iss, campo4, delimitador);
+    getline(iss, campo5, delimitador);
+    getline(iss, campo6, delimitador);
     
-    //Repito el primer proceso para todos los campos
-
-    size_t pos2 = linea.find(delimitador);
-    campo2 = linea.substr(0,pos2);
-    rem_se_ext(campo2);
-    linea = linea.substr(pos2+1);
-
-    size_t pos3 = linea.find(delimitador);
-    campo3 = linea.substr(0,pos3);
-    rem_se_ext(campo3);
-    linea = linea.substr(pos3+1);
-
-    size_t pos4 = linea.find(delimitador);
-    campo4 = linea.substr(0,pos4);
-    rem_se_ext(campo4);
-    linea = linea.substr(pos4+1);
-
-    size_t pos5 = linea.find(delimitador);
-    campo5 = linea.substr(0,pos5);
-    rem_se_ext(campo5);
-    linea = linea.substr(pos5+1);
-
-    size_t pos6 = linea.find(delimitador);
-    campo6 = linea.substr(0,pos6);
-    rem_se_ext(campo6);
 
     /*********************************************/
-    // Inicializo los campos
+    // Inicializo los campos numericos con stoi
     Dorsal = stoi(campo1);
-    DNI = campo2;
-    Nombre = campo3;
-    Apellidos = campo4;
+
+    // Inicializo los campos de tipo Fecha
     FechaNacimiento = Fecha(campo5);
-    Sexo = campo6[0];
+
+    // Inicializo los campos de tipo string
+    string sexoespacios;
+    istringstream iss2(campo6);
+    while (iss2 >> campo6) {
+        sexoespacios+= campo6 + " ";
+    }
+    sexoespacios.pop_back(); // quito el último espacio
+    Sexo = sexoespacios[0];
     
+    istringstream iss3(campo2);
+    while (iss3 >> campo2) {
+        DNI += campo2 + " ";
+    }
+    DNI.pop_back(); // quito el último espacio
+ 
+
+    istringstream iss4(campo3);
+    while (iss4 >> campo3) {
+        Nombre += campo3 + " ";
+    }
+    Nombre.pop_back(); // quito el último espacio
     
+    istringstream iss5(campo4);
+    while (iss5 >> campo4) {
+        Apellidos += campo4 + " ";
+    }
+    Apellidos.pop_back(); // quito el último espacio
+
+       
 }
 
 
@@ -183,28 +185,54 @@ void Corredor::SetSexo(char sexo) {
 // Imprime los campos de Corredor
 // no recibe nada pero usa los métodos de formateo de utils
 //
+// Argumentos:
+//      nombre: nombre del corredor
 // Devuelve:
-//      Corredor en formato string
-string Corredor::ToString() const{
-    
-    // Creo el campo nom_comp y diferencio el sexo
-    string nom_comp = Apellidos + ", " + Nombre;
-    string sex_comp;
+//      Carrera en formato string
+string Corredor::ToString (const string nombre) const
+{
+    ostringstream oss;
+
+    oss<<setw(4) << Dorsal << " ";
+    oss<<setw(30)<< left<<(Apellidos + ", " + Nombre) << " ";
+    oss<<setw(12)<< left<<DNI << " ";
+    oss<<setw(12)<<FechaNacimiento.ToString(true) << " ";
+
     if (Sexo == 'H')
-    {
-        sex_comp = "HOMBRE";
-    }else
-        {
-            sex_comp = "MUJER";
-        }
+        oss<<setw(6)<< left<<"HOMBRE";
+    else
+        oss<<setw(6)<< left<<"MUJER";
 
-    // Formateo los campos
-    string campo_1 = FormatInt(Dorsal, 4) + " ";
-    string campo_2_3 = FormatString(nom_comp,35) + " ";
-    string campo_4 = DNI + " ";
-    string campo_5 = FechaNacimiento.ToString(true) + " ";
-    string campo_6 = FormatString(sex_comp,7);
-
-    // Devuelvo la concatenacion
-    return campo_1 + campo_2_3 + campo_4 + campo_5 + campo_6;
+    return oss.str();
 }
+
+/***********************************************/
+// Operador >>
+// Argumentos:
+//      objeto: objeto a inicilizar
+// Inicializa los campos
+istream & operator >> (istream & in, Corredor & objeto)
+{
+    string linea;
+    getline(in, linea);
+    objeto = Corredor(linea);
+    return in;
+
+}
+
+/**********************************************/
+// Operator <<
+// Argumentos:
+//      objeto: objeto a mostrar
+// devuelve un flujo con el objeto
+ostream & operator << (ostream &out, Corredor & objeto)
+{
+    out << objeto.Dorsal << objeto.DELIMITADOR;
+    out << objeto.DNI << objeto.DELIMITADOR;
+    out << objeto.Nombre << objeto.DELIMITADOR;
+    out << objeto.Apellidos << objeto.DELIMITADOR;
+    out << objeto.FechaNacimiento << objeto.DELIMITADOR;
+    out << objeto.Sexo << objeto.DELIMITADOR;
+
+    return out;
+}	

@@ -16,8 +16,6 @@
 #ifndef TIEMPO
 #define TIEMPO
 
-
-
 #include <string>
 #include <iostream>
 
@@ -112,6 +110,21 @@ public:
     // Devuelve:
     //      true si el tiempo es mayor, false en caso contrario
     bool operator>(const Tiempo &t)const;
+
+    /***********************************************/
+    // Operador >>
+    // Argumentos:
+    //      objeto: objeto a inicilizar
+    // Inicializa los campos
+    friend istream & operator >> (istream & in, Tiempo & objeto);
+
+    /**********************************************/
+    // Operatos <<
+    // Argumentos:
+    //      objeto: objeto a mostrar
+    // devuelve un flujo con el objeto
+    friend ostream & operator << (ostream &out, Tiempo & objeto);
+
 };
 
 #endif

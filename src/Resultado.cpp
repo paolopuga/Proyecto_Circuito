@@ -19,7 +19,7 @@
 #include <iomanip>
 
 #include "Resultado.h"
-#include "utils.h"
+
 
 /******************CONSTRUCTORES**********************/
 
@@ -38,30 +38,20 @@ Resultado::Resultado(string linea, char delimitador) {
     // Declaro un string para campo
     string campo1, campo2, campo3;
     
-    /**********************************************************/
-    // Busco la posicion del delimitador para separar la cadena
-    size_t pos1 = linea.find(delimitador);
-    campo1 = linea.substr(0,pos1); // separo el campo
-    rem_se_ext(campo1); // quito los espacios en blanco
-    linea = linea.substr(pos1+1); // renuevo la linea quitando el separador
+    // Usamos flujos para separar los campos
+    istringstream iss(linea);
 
-    //Repito el primer proceso para todos los campos
-
-    size_t pos2 = linea.find(delimitador);
-    campo2 = linea.substr(0,pos2);
-    rem_se_ext(campo2);
-    linea = linea.substr(pos2+1);
-
-    size_t pos3 = linea.find(delimitador);
-    campo3 = linea.substr(0,pos3);
-    rem_se_ext(campo3);
-
-    
+    getline(iss, campo1, delimitador);
+    getline(iss, campo2, delimitador);
+    getline(iss, campo3, delimitador);
+   
     /*********************************************/
-    // Inicializo los campos
-    Dorsal = stoi(campo1);
-    TiempoCarrera = Tiempo(campo2);
+    // Inicializo los campos numericos con stoi
+    Dorsal = stoi(campo1);   
     Posicion = stoi(campo3);
+
+    // Inicializo los campos de tipo Tiempo
+    TiempoCarrera = Tiempo(campo2);
     
 }
 
@@ -130,15 +120,43 @@ void Resultado::SetTiempoCarrera(Tiempo tiempo_carrera) {
 // Imprime los campos de Resultado
 // no recibe nada pero usa los métodos de formateo de utils
 //
+// Argumentos:
+//      nombre: nombre del resultado
 // Devuelve:
-//      Resultado en formato string
-string Resultado::ToString() const{
-    
-    // Formateo los campos
-    string campo_1 = FormatInt(Posicion,4) + ". ";
-    string campo_2 = FormatInt(Dorsal,4) + " ";
-    string campo_3 = TiempoCarrera.ToString(); 
+//      Carrera en formato string
+string Resultado::ToString (const string nombre) const
+{
+    ostringstream oss;
+    oss << setw(3) << Posicion << " ";
+    oss << setw(4) << Dorsal << " ";
+    oss << TiempoCarrera.ToString() << " ";
 
-    // Devuelvo la concatenacion
-    return campo_1 + campo_2 + campo_3 ;
+    return oss.str();
+}
+
+/***********************************************/
+// Operador >>
+// Argumentos:
+//      objeto: objeto a inicilizar
+// Inicializa los campos
+istream & operator >> (istream & in, Resultado & objeto)
+{
+    string linea;
+    getline(in, linea);
+    objeto = Resultado(linea);
+    return in;
+}
+
+/**********************************************/
+// Operatos <<
+// Argumentos:
+//      objeto: objeto a mostrar
+// devuelve un flujo con el objeto
+ostream & operator << (ostream &out, Resultado & objeto)
+{
+    out << objeto.Dorsal<< objeto.DELIMITADOR;
+    out << objeto.TiempoCarrera << objeto.DELIMITADOR;
+    out << objeto.Posicion << objeto.DELIMITADOR;
+
+    return out;
 }

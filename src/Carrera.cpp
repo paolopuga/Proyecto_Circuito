@@ -17,10 +17,11 @@
 #include <iostream>
 #include <cstring>
 #include <iomanip>
-
+#include <sstream>
+#include <string>
 
 #include "Carrera.h"
-#include "utils.h"
+
 
 
 /******************CONSTRUCTORES**********************/
@@ -41,36 +42,33 @@ Carrera::Carrera(string linea, char delimitador) {
 	// Declaro un string para campo
 	string campo1, campo2, campo3, campo4;
 	
-	/**********************************************************/
-    // Busco la posicion del delimitador para separar la cadena
-    size_t pos1 = linea.find(delimitador);
-    campo1 = linea.substr(0,pos1); // separo el campo 
-    rem_se_ext(campo1); // quito los espacios en blanco
-    linea = linea.substr(pos1+1); // renuevo la linea quitando el separador
-
-    //Repito el primer proceso para todos los campos
-
-	size_t pos2 = linea.find(delimitador);
-	campo2 = linea.substr(0,pos2);
-	rem_se_ext(campo2);
-	linea = linea.substr(pos2+1);
-
-	size_t pos3 = linea.find(delimitador);
-	campo3 = linea.substr(0,pos3);
-	rem_se_ext(campo3);
-	linea = linea.substr(pos3+1);
-
-	size_t pos4 = linea.find(delimitador);
-	campo4 = linea.substr(0,pos4);
-	rem_se_ext(campo4);
-
+	// Usamos flujos para separar los campos
+    istringstream iss(linea);
+	
+	getline(iss, campo1, delimitador);
+	getline(iss, campo2, delimitador);
+	getline(iss, campo3, delimitador);
+	getline(iss, campo4, delimitador);
 	
 	/*********************************************/
-	// Inicializo los campos
+	// Inicializo los campos nuemericos con stoi
 	IdCarrera = stoi(campo1);
 	Distancia = stod(campo2);
+
+
+	/*********************************************/
+	// Inicializo los campos de tipo Fecha
 	FechaCarrera = Fecha(campo3);
-	Nombre = campo4;
+	
+	
+	/*********************************************/
+	// Inicializo el campo Nombre con flujo aux
+	istringstream iss2(campo4);
+	
+	while (iss2 >> campo4) {
+		Nombre += campo4 + " ";
+	}
+	Nombre.pop_back();
 
 }
 
@@ -149,17 +147,54 @@ void Carrera::SetNombre(string nombre) {
 // Imprime los campos de Carrera
 // no recibe nada pero usa los métodos de formateo de utils
 //
+// Argumentos:
+//      nombre: nombre de la carrera
 // Devuelve:
 //      Carrera en formato string
-string Carrera::ToString() const{
+string Carrera::ToString (const string nombre) const
+{
+	// inicialio el flujo de salida
+	ostringstream oss;
 
-	// Formateo los campos
-	string campo_1 = FormatInt(IdCarrera, 4) + " ";
-	string campo_2 = FormatString(Nombre, 40) + " ";
-	string campo_3 = FormatDouble(Distancia,6,3) + " km ";
-	string campo_4 = FechaCarrera.ToString(true);
+	// Establezco las flags
+	oss.setf(ios::fixed);
+	oss.setf(ios::showpoint);
+	oss.precision(3);
+	
+	// Imprimo los campos
+	oss << setw(3) << IdCarrera <<" ";
+	oss << setw(40) << left << Nombre << " ";
+	oss << setw(5) << Distancia << " ";
+	oss << FechaCarrera.ToString() ;
 
-	// Devuelvo la concatenacion
-	return campo_1 + campo_2 + campo_3 + campo_4;
-
+	return oss.str(); // Devuelvo el flujo formato string
 }
+
+/***********************************************/
+// Operador >>
+// Argumentos:
+//      objeto: objeto a inicilizar
+// Inicializa los campos
+istream & operator >> (istream & in, Carrera & objeto)
+{
+	string linea;
+	getline(in, linea);
+	objeto = Carrera(linea);
+	return in;
+}
+
+/**********************************************/
+// Operator <<
+// Argumentos:
+//      objeto: objeto a mostrar
+// devuelve un flujo con el objeto
+ostream & operator << (ostream &out, Carrera & objeto)
+{
+	out << objeto.IdCarrera << objeto.DELIMITADOR;
+	out << objeto.Distancia<< objeto.DELIMITADOR;
+	out << objeto.FechaCarrera << objeto.DELIMITADOR;
+	out << objeto.Nombre << objeto.DELIMITADOR;
+
+	return out;
+}
+

@@ -33,6 +33,9 @@ private:
     int mes;
     int anio;
 
+    // Vector de meses  
+    const char* MESES[12];
+
     static const char DELIMITADOR = '/'; // separador de la cadena
 
 public:
@@ -114,6 +117,21 @@ public:
     // Devuelve:
     //      true si la fecha es mayor, false en caso contrario
     bool operator>(const Fecha &f)const;
+
+    /***********************************************/
+    // Operador >>
+    // Argumentos:
+    //      objeto: objeto a inicilizar
+    // Inicializa los campos
+    friend istream & operator >> (istream & in, Fecha & objeto);
+
+    /**********************************************/
+    // Operatos <<
+    // Argumentos:
+    //      objeto: objeto a mostrar
+    // devuelve un flujo con el objeto
+    friend ostream & operator << (ostream &out, Fecha & objeto);
+
 };
 
 

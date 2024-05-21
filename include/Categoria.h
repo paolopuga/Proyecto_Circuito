@@ -118,9 +118,25 @@ public:
     // Imprime los campos de Categoria
     // no recibe nada pero usa los métodos de formateo de utils
     //
+    // Argumentos:
+	//      nombre: nombre de la Categoria
     // Devuelve:
-    //      Categoria en formato string
-	string ToString (void)const;
+    //      Carrera en formato string
+	string ToString (const string nombre="") const;
+	
+	/***********************************************/
+    // Operador >>
+    // Argumentos:
+    //      objeto: objeto a inicilizar
+    // Inicializa los campos
+    friend istream & operator >> (istream & in, Categoria& objeto);
+
+    /**********************************************/
+    // Operatos <<
+    // Argumentos:
+    //      objeto: objeto a mostrar
+    // devuelve un flujo con el objeto
+    friend ostream & operator << (ostream &out, Categoria & objeto);
 	
 };
 

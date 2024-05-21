@@ -18,9 +18,10 @@
 #include <iostream>
 #include <cstring>
 #include <iomanip>
+#include <sstream>
+#include <string>
 
 #include "Tiempo.h"
-#include "utils.h"
 
 
 using namespace std;
@@ -63,24 +64,12 @@ Tiempo::Tiempo(string linea, char delimitador)
     // Declaro un string para campo
     string campo1, campo2, campo3;
     
-    /**********************************************************/
-    // Busco la posicion del delimitador para separar la cadena
-    size_t pos1 = linea.find(delimitador);
-    campo1 = linea.substr(0,pos1); // separo el campo 
-    rem_se_ext(campo1); // quito los espacios en blanco
-    linea = linea.substr(pos1+1); // renuevo la linea quitando el separador
+    // Usamos flujos para separar los campos
+    istringstream iss(linea);
 
-    //Repito el primer proceso para todos los campos
-
-    size_t pos2 = linea.find(delimitador);
-    campo2 = linea.substr(0,pos2);
-    rem_se_ext(campo1);
-    linea = linea.substr(pos2+1);
-
-    size_t pos3 = linea.find(delimitador);
-    campo3 = linea.substr(0,pos3);
-    rem_se_ext(campo1);
-
+    getline(iss, campo1, delimitador);
+    getline(iss, campo2, delimitador);
+    getline(iss, campo3, delimitador);
     
     /*********************************************/
     // Inicializo los campos
@@ -140,18 +129,13 @@ void Tiempo::SetSegundos(int s) {
 //      la hora formateada   
 string Tiempo::ToString() const
 {
-    
-    string hora_actual;
+    ostringstream oss;
 
+    oss << setfill('0') << setw(2) << horas << ":"
+        << setfill('0') << setw(2) << minutos << ":"
+        << setfill('0') << setw(2) << segundos;
 
-    string campo1, campo2, campo3;
-    campo1 = FormatInt(horas,2,'0') + ":";
-    campo2 = FormatInt(minutos,2,'0')+ ":";
-    campo3 = FormatInt(segundos,2, '0');
-    hora_actual = campo1 + campo2 + campo3;
-    
-
-    return hora_actual;
+    return oss.str();   
 }
 
 /******************OPERADORES**********************/
@@ -200,4 +184,32 @@ bool Tiempo::operator>(const Tiempo &t)const
     }
 
     return menor;
+}
+
+/***********************************************/
+// Operador >>
+// Argumentos:
+//      objeto: objeto a inicilizar
+// Inicializa los campos
+istream &operator >> (istream & in, Tiempo & objeto)
+{
+    string linea;
+    getline(in, linea);
+    objeto = Tiempo(linea);
+
+    return in;
+}
+
+/**********************************************/
+// Operatos <<
+// Argumentos:
+//      objeto: objeto a mostrar
+// devuelve un flujo con el objeto
+ostream &operator << (ostream &out, Tiempo & objeto)
+{
+    out << setfill('0') << setw(2) << objeto.horas << ":"
+        << setfill('0') << setw(2) << objeto.minutos << ":"
+        << setfill('0') << setw(2) << objeto.segundos;
+
+    return out;
 }

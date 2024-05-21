@@ -6,3 +6,8 @@
 
 # Ignora todos los archivos de texto
 *.txt
+
+# Ignora carpetas /bin /lib y /obj
+/bin
+/lib
+/obj

@@ -17,7 +17,7 @@
 #ifndef CARRERA
 #define CARRERA
 
-
+#include <iostream>
 #include <string>
 
 #include "Fecha.h"
@@ -111,11 +111,26 @@ public:
     /***********************************************/
     // Imprime los campos de Carrera
     // no recibe nada pero usa los métodos de formateo de utils
-    //
+    // 
+	// Argumentos:
+	//      nombre: nombre de la carrera
     // Devuelve:
     //      Carrera en formato string
-	string ToString (void) const;
+	string ToString (const string nombre="") const;
 	
+	/***********************************************/
+    // Operador >>
+    // Argumentos:
+    //      objeto: objeto a inicilizar
+    // Inicializa los campos
+    friend istream & operator >> (istream & in, Carrera & objeto);
+
+    /**********************************************/
+    // Operatos <<
+    // Argumentos:
+    //      objeto: objeto a mostrar
+    // devuelve un flujo con el objeto
+    friend ostream & operator << (ostream &out, Carrera & objeto) ;
 };
 
 #endif

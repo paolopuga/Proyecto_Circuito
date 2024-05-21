@@ -18,9 +18,10 @@
 #include <cstring>
 #include <iomanip>
 #include <chrono>
+#include <sstream>
+#include <string>
 
 #include "Fecha.h"
-#include "utils.h"
 
 using namespace std;
 
@@ -41,6 +42,20 @@ Fecha::Fecha()
     dia = timeinfo->tm_mday;
     mes = timeinfo->tm_mon + 1; // meses desde 0 
     anio = timeinfo->tm_year + 1900; // Años desde 1900
+
+    // inicializo vector de meses
+    MESES[0] = "Enero";
+    MESES[1] = "Febrero";
+    MESES[2] = "Marzo";
+    MESES[3] = "Abril";
+    MESES[4] = "Mayo";
+    MESES[5] = "Junio";
+    MESES[6] = "Julio";
+    MESES[7] = "Agosto";
+    MESES[8] = "Septiembre";
+    MESES[9] = "Octubre";
+    MESES[10] = "Noviembre";
+    MESES[11] = "Diciembre";
    
 }
 
@@ -60,30 +75,33 @@ Fecha::Fecha(string linea, char delimitador)
     // Declaro un string para campo
     string campo1, campo2, campo3;
 
-    /**********************************************************/
-    // Busco la posicion del delimitador para separar la cadena
-    size_t pos1 = linea.find(delimitador);
-    campo1 = linea.substr(0,pos1); // separo el campo
-    rem_se_ext(campo1); // quito los espacios en blanco
-    linea = linea.substr(pos1+1); // renuevo la linea quitando el separador
+    // Usamos flujos de string para separar los campos
+    istringstream iss(linea);
 
-    //Repito el primer proceso para todos los campos
-
-    size_t pos2 = linea.find(delimitador);
-    campo2 = linea.substr(0,pos2);
-    rem_se_ext(campo2);
-    linea = linea.substr(pos2+1);
-
-    size_t pos3 = linea.find(delimitador);
-    campo3 = linea.substr(0,pos3);
-    rem_se_ext(campo3);
-    
+    // Separo los campos
+    getline(iss, campo1, delimitador);
+    getline(iss, campo2, delimitador);
+    getline(iss, campo3, delimitador);
 
     /*********************************************/
     // Inicializo los campos
     dia = stoi(campo1);
     mes = stoi(campo2);
     anio = stoi(campo3);
+
+    // inicializo vector de meses
+    MESES[0] = "Enero";
+    MESES[1] = "Febrero";
+    MESES[2] = "Marzo";
+    MESES[3] = "Abril";
+    MESES[4] = "Mayo";
+    MESES[5] = "Junio";
+    MESES[6] = "Julio";
+    MESES[7] = "Agosto";
+    MESES[8] = "Septiembre";
+    MESES[9] = "Octubre";
+    MESES[10] = "Noviembre";
+    MESES[11] = "Diciembre";
 }
 
 /******************GETTERS**********************/
@@ -141,15 +159,25 @@ void Fecha::SetAnio(int a) {
 //      La fecha en formato string
 string Fecha::ToString(bool corto)  const{
     
-    
+    ostringstream oss;
 
-    // Convierto los enteros a string
-    string campo_1 = FormatString(to_string(dia),2,TipoAlineacion::Derecha);
-    string campo_2 = FormatMes(mes,corto)+" ";
-    string campo_3 = to_string(anio);
+    string mes_string = MESES[mes-1]; // Obtengo el mes en formato string
 
-    // Devuelvo la concatenacion
-    return campo_1 +" " + campo_2 +campo_3;
+    string mes_corto = mes_string.substr(0,3); // mes en formato corto
+
+    oss<< setfill('0') << setw(2) << dia; // Relleno con 0 a la izquierda
+
+    if(corto)
+    {
+        oss << " " << mes_corto << " " << setw(4)<<anio;
+    }
+    else
+    {
+        oss << " " << mes_string << " " << setw(4)<<anio;
+    }
+
+    return oss.str();
+
 }
 
 /******************OPERADORES**********************/
@@ -197,4 +225,32 @@ bool Fecha::operator>(const Fecha &f)const
         }
     }
     return menor;
+}
+
+/***********************************************/
+// Operador >>
+// Argumentos:
+//      objeto: objeto a inicilizar
+// Inicializa los campos
+istream &operator >> (istream & in, Fecha & objeto) 
+{
+    string linea;
+    getline(in, linea);
+    objeto = Fecha(linea);
+
+    return in;
+}
+
+/**********************************************/
+// Operatos <<
+// Argumentos:
+//      objeto: objeto a mostrar
+// devuelve un flujo con el objeto
+ostream &operator << (ostream &out, Fecha & objeto)
+{
+    out << setfill('0') << setw(2) << objeto.dia << "/"
+        << setfill('0') << setw(2) << objeto.mes << "/"
+        << setfill('0') << setw(4) << objeto.anio;
+
+    return out;
 }
