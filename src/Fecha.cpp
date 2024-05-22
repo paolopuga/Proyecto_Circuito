@@ -23,6 +23,8 @@
 
 #include "Fecha.h"
 
+#include "Utils.h"
+
 using namespace std;
 
 
@@ -85,9 +87,9 @@ Fecha::Fecha(string linea, char delimitador)
 
     /*********************************************/
     // Inicializo los campos
-    dia = stoi(campo1);
-    mes = stoi(campo2);
-    anio = stoi(campo3);
+    dia = stoi(RemoveBlanks(campo1));
+    mes = stoi(RemoveBlanks(campo2));
+    anio = stoi(RemoveBlanks(campo3));
 
     // inicializo vector de meses
     MESES[0] = "Enero";

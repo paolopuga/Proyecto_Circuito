@@ -533,6 +533,46 @@ TodosResultados& TodosResultados::operator+=(const Resultados& otro)
 
 }
 
+/***********************************************/
+/***********************************************/
+// Operador lectura >>
+// Descripción: Lee los datos de un flujo de entrada y los asigna al objeto.
+// Argumentos:
+//      is: Flujo de entrada.
+//      objeto: Objeto TodosResultados al que se asignan los datos.
+// Devuelve: Una referencia al flujo de entrada.
+istream& operator>>(istream& is, TodosResultados& objeto)
+{
+    objeto.LiberarMemoria(); // Liberamos la memoria
+
+    Resultados resultados; // Creamos un objeto Resultados
+
+    while (is >> resultados) // Mientras se pueda leer
+    {
+        objeto+=resultados; // Añadimos el objeto
+    }
+
+    return is; // Devolvemos el flujo de entrada
+}
+
+/***********************************************/
+/***********************************************/
+// Operador escritura <<
+// Descripción: Escribe los datos del objeto en un flujo de salida.
+// Argumentos:
+//      os: Flujo de salida.
+//      objeto: Objeto TodosResultados que se escribe.
+// Devuelve: Una referencia al flujo de salida.
+ostream& operator<<(ostream& os, const TodosResultados& objeto)
+{
+    for (int i = 0; i < objeto.usados; i++) // Recorremos los datos
+    {
+        os << objeto.datos[i]<<endl; // Escribimos los datos
+    }
+
+    return os; // Devolvemos el flujo de salida
+}
+
 /*****************************************************************************/
 /*****************************************************************************/
 /*****************************************************************************/
@@ -596,6 +636,9 @@ void TodosResultados:: LiberarMemoria (void)
     {
         delete [] datos; // Liberamos la memoria
         datos = nullptr; // Ponemos el puntero a nulo
+
+        usados = 0; // Ponemos los usados a 0
+        capacidad = 0; // Ponemos la capacidad a 0
     }
        
 }	

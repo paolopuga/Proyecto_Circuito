@@ -15,10 +15,14 @@
 /***************************************************************************/
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <string>
 
 #include "Carreras.h"
 #include "Carrera.h"
+
+#include "Utils.h"
 
 using namespace std;
 
@@ -57,6 +61,17 @@ Carreras::Carreras(int capacidad_inicial)
 
 /***********************************************/
 /***********************************************/
+// Constructor a partir de un fichero
+// Descripción: Crea un objeto Carreras a partir de un fichero.
+// Argumentos:
+//      nombre: Nombre del fichero del que se leen los datos.
+Carreras::Carreras(const string & nombre)
+{
+    LeerCarreras(nombre); // Leemos los datos
+}
+
+/***********************************************/
+/***********************************************/
 // Destructor
 // Descripción: Libera memoria y recursos utilizados por el objeto.
 Carreras::~Carreras(void)
@@ -86,7 +101,7 @@ int Carreras:: Usados(void) const
 /***********************************************/
 // EstaVacio
 // Descripción: Comprueba si el objeto está vacío.
-bool Carreras::EstaVacio(void)
+bool Carreras::EstaVacio(void) const
 {
     return usados == 0; // Devolvemos si está vacío
 
@@ -535,6 +550,97 @@ Carreras& Carreras::operator+=(const Carrera& otro)
 
 }
 
+/***********************************************/
+/***********************************************/
+// Operador lectura >>
+// Descripción: Lee los datos de un flujo de entrada y los asigna al objeto.
+// Argumentos:
+//      is: Flujo de entrada.
+//      objeto: Objeto Carreras al que se asignan los datos.
+// Devuelve: Una referencia al flujo de entrada.
+istream& operator>>(istream& is, Carreras& objeto)
+{
+    Carrera carrera; // Creamos un objeto Carrera
+
+    while (is >> carrera) // Mientras se pueda leer
+    {
+        objeto.Aniade(carrera); // Añadimos el objeto
+    }
+
+    return is; // Devolvemos el flujo de entrada
+}
+
+/***********************************************/
+/***********************************************/
+// Operador escritura <<
+// Descripción: Escribe los datos del objeto en un flujo de salida.
+// Argumentos:
+//      os: Flujo de salida.
+//      objeto: Objeto Carreras que se escribe.
+// Devuelve: Una referencia al flujo de salida.
+ostream& operator<<(ostream& os, const Carreras& objeto)
+{
+    for (int i = 0; i < objeto.usados; i++) // Recorremos los datos
+    {
+        os << objeto.datos[i]<<endl; // Escribimos los datos
+    }
+
+    return os; // Devolvemos el flujo de salida
+}
+
+/***********************************************/
+/***********************************************/
+// Metodo de Escritura en Fichero
+// Descripción: Escribe los datos del objeto en un fichero.
+// Argumentos:
+//      nombre: Nombre del fichero en el que se escriben los datos.
+void Carreras::EscribirCarreras(const string & nombre) const
+{
+    if(!EstaVacio()){
+
+        ofstream fichero; // Creamos un objeto ofstream
+
+        fichero.open(nombre); // Abrimos el fichero
+
+        if (fichero) // Si se ha abierto
+        {
+            fichero << *this; // Escribimos los datos
+            fichero.close(); // Cerramos el fichero
+        }
+    }
+}
+
+/***********************************************/
+/***********************************************/
+// Metodo de Lectura en Fichero
+// Descripción: Lee los datos de un fichero y los asigna al objeto.
+// Argumentos:
+//      nombre: Nombre del fichero del que se leen los datos.
+void Carreras::LeerCarreras(const string & nombre)
+{
+    LiberarMemoria(); // Liberamos la memoria
+
+    string fin = AniadirDirectorio("data", nombre); // Añadimos el directorio
+    
+    ifstream fichero(fin); // Creamos un objeto ifstream
+
+    string cad;
+    string magic_word = "CARRERAS"; // Palabra mágica
+
+    getline(fichero, cad); // Leemos la primera línea
+
+    if (cad == magic_word) // Si la palabra mágica es correcta
+    {
+        SaltarCabecera(fichero); // Saltamos la cabecera
+
+        fichero >> *this; // Leemos los datos
+    }
+
+    fichero.close(); // Cerramos el fichero
+}
+
+
+
 /*****************************************************************************/
 /*****************************************************************************/
 /*****************************************************************************/
@@ -598,6 +704,9 @@ void Carreras:: LiberarMemoria (void)
     {
         delete [] datos; // Liberamos la memoria
         datos = nullptr; // Ponemos el puntero a nulo
+
+        usados = 0; // Ponemos los usados a 0
+        capacidad = 0; // Ponemos la capacidad a 0
     }
        
 }	

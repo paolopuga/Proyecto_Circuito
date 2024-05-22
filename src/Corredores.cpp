@@ -15,10 +15,14 @@
 /***************************************************************************/
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <string>
 
 #include "Corredores.h"
 #include "Corredor.h"
+
+#include "Utils.h"
 
 using namespace std;
 
@@ -57,6 +61,17 @@ Corredores::Corredores(int capacidad_inicial)
 
 /***********************************************/
 /***********************************************/
+// Constructor a partir de un fichero
+// Descripción: Crea un objeto Corredores a partir de un fichero.
+// Argumentos:
+//      nombre: Nombre del fichero del que se leen los datos.
+Corredores::Corredores(const string & nombre)
+{
+    LeerCorredores(nombre); // Leemos los datos
+}
+
+/***********************************************/
+/***********************************************/
 // Destructor
 // Descripción: Libera memoria y recursos utilizados por el objeto.
 Corredores::~Corredores(void)
@@ -86,7 +101,7 @@ int Corredores:: Usados(void) const
 /***********************************************/
 // EstaVacio
 // Descripción: Comprueba si el objeto está vacío.
-bool Corredores::EstaVacio(void)
+bool Corredores::EstaVacio(void) const
 {
     return usados == 0; // Devolvemos si está vacío
 
@@ -525,6 +540,96 @@ Corredores& Corredores::operator+=(const Corredor& otro)
 
 }
 
+/***********************************************/
+/***********************************************/
+// Operador lectura >>
+// Descripción: Lee los datos de un flujo de entrada y los asigna al objeto.
+// Argumentos:
+//      is: Flujo de entrada.
+//      objeto: Objeto Corredores al que se asignan los datos.
+// Devuelve: Una referencia al flujo de entrada.
+istream& operator>>(istream& is, Corredores& objeto)
+{
+    Corredor corredor; // Creamos un objeto Corredor
+
+    while (is >> corredor) // Mientras se puedan leer datos
+    {
+        objeto+=corredor; // Añadimos el objeto
+    }
+
+    return is; // Devolvemos el flujo de entrada
+}
+
+/***********************************************/
+/***********************************************/
+// Operador escritura <<
+// Descripción: Escribe los datos del objeto en un flujo de salida.
+// Argumentos:
+//      os: Flujo de salida.
+//      objeto: Objeto Corredores que se escribe.
+// Devuelve: Una referencia al flujo de salida.
+ostream& operator<<(ostream& os, const Corredores& objeto)
+{
+    for (int i = 0; i < objeto.usados; i++) // Recorremos los datos
+    {
+        os << objeto.datos[i]<<endl; // Escribimos los datos
+    }
+
+    return os; // Devolvemos el flujo de salida
+}
+
+/***********************************************/
+/***********************************************/
+// Metodo de Escritura en Fichero
+// Descripción: Escribe los datos del objeto en un fichero.
+// Argumentos:
+//      nombre: Nombre del fichero en el que se escriben los datos.
+void Corredores::EscribirCorredores(const string & nombre) const
+{
+    if(!EstaVacio()){
+
+        ofstream fichero; // Creamos un objeto ofstream
+
+        fichero.open(nombre); // Abrimos el fichero
+
+        if (fichero) // Si se ha abierto
+        {
+            fichero << *this; // Escribimos los datos
+            fichero.close(); // Cerramos el fichero
+        }
+    }
+}
+
+/***********************************************/
+/***********************************************/
+// Metodo de Lectura en Fichero
+// Descripción: Lee los datos de un fichero y los asigna al objeto.
+// Argumentos:
+//      nombre: Nombre del fichero del que se leen los datos.
+void Corredores::LeerCorredores(const string & nombre)
+{
+    LiberarMemoria(); // Liberamos la memoria
+
+    string fin = AniadirDirectorio("data", nombre); // Añadimos el directorio
+
+    ifstream fichero(fin); // Creamos un objeto ifstream
+
+    string cad_mag;
+    getline(fichero, cad_mag);
+
+    if (fichero && cad_mag == "CORREDORES") // Si se ha abierto
+    {
+        SaltarCabecera(fichero); // Saltamos la cabecera
+        fichero >> *this; // Leemos los datos
+        fichero.close(); // Cerramos el fichero
+    }
+    else // Si no se ha abierto
+    {
+        // quedará vacío
+        EliminaTodos(); // Liberamos la memoria
+    }
+}
+
 /*****************************************************************************/
 /*****************************************************************************/
 /*****************************************************************************/
@@ -588,6 +693,9 @@ void Corredores:: LiberarMemoria (void)
     {
         delete [] datos; // Liberamos la memoria
         datos = nullptr; // Ponemos el puntero a nulo
+
+        usados = 0; // Ponemos los usados a 0
+        capacidad = 0; // Ponemos la capacidad a 0
     }
        
 }	
@@ -674,4 +782,5 @@ void Corredores::Aniade(const Corredor& objeto)
     }
     datos[usados] = objeto; // Añadimos el objeto
     usados++; // Aumentamos los usados
+
 }

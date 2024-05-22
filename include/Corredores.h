@@ -63,6 +63,14 @@ public:
 
 	/***********************************************/
 	/***********************************************/
+	// Constructor a partir de un fichero
+	// Descripción: Crea un objeto Corredores a partir de un fichero.
+	// Argumentos:
+	//      nombre: Nombre del fichero del que se leen los datos.
+	Corredores(const string & nombre);
+
+	/***********************************************/
+	/***********************************************/
 	// Destructor
 	// Descripción: Libera memoria y recursos utilizados por el objeto.
 	~Corredores(void);
@@ -83,7 +91,7 @@ public:
 	/***********************************************/
 	// EstaVacio
 	// Descripción: Comprueba si el objeto está vacío.
-	bool EstaVacio(void);
+	bool EstaVacio(void)const;
 
 	/***********************************************/
 	/***********************************************/
@@ -332,6 +340,41 @@ public:
 	// Devuelve: Un objeto Corredores con el Corredor añadido.
 	Corredores& operator+=(const Corredor& otro);
 
+	/***********************************************/
+	/***********************************************/
+	// Operador lectura >>
+	// Descripción: Lee los datos de un flujo de entrada y los asigna al objeto.
+	// Argumentos:
+	//      is: Flujo de entrada.
+	//      objeto: Objeto Corredores al que se asignan los datos.
+	// Devuelve: Una referencia al flujo de entrada.
+	friend istream& operator>>(istream& is, Corredores& objeto);
+
+	/***********************************************/
+	/***********************************************/
+	// Operador escritura <<
+	// Descripción: Escribe los datos del objeto en un flujo de salida.
+	// Argumentos:
+	//      os: Flujo de salida.
+	//      objeto: Objeto Corredores que se escribe.
+	// Devuelve: Una referencia al flujo de salida.
+	friend ostream& operator<<(ostream& os, const Corredores& objeto);
+
+	/***********************************************/
+	/***********************************************/
+	// Metodo de Escritura en Fichero
+	// Descripción: Escribe los datos del objeto en un fichero.
+	// Argumentos:
+	//      nombre: Nombre del fichero en el que se escriben los datos.
+	void EscribirCorredores(const string & nombre) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Metodo de Lectura en Fichero
+	// Descripción: Lee los datos de un fichero y los asigna al objeto.
+	// Argumentos:
+	//      nombre: Nombre del fichero del que se leen los datos.
+	void LeerCorredores(const string & nombre);
 
 private:
 

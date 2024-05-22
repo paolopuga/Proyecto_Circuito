@@ -15,10 +15,14 @@
 /***************************************************************************/
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <string>
 
 #include "Categorias.h"
 #include "Categoria.h"
+
+#include "Utils.h"
 
 using namespace std;
 
@@ -57,6 +61,17 @@ Categorias::Categorias(int capacidad_inicial)
 
 /***********************************************/
 /***********************************************/
+// Constructor a partir de un fichero
+// Descripción: Crea un objeto Categorias a partir de un fichero.
+// Argumentos:
+//      nombre: Nombre del fichero del que se leen los datos.
+Categorias::Categorias(const string & nombre)
+{
+    LeerCategorias(nombre); // Leemos los datos
+}
+
+/***********************************************/
+/***********************************************/
 // Destructor
 // Descripción: Libera memoria y recursos utilizados por el objeto.
 Categorias::~Categorias(void)
@@ -86,7 +101,7 @@ int Categorias:: Usados(void) const
 /***********************************************/
 // EstaVacio
 // Descripción: Comprueba si el objeto está vacío.
-bool Categorias::EstaVacio(void)
+bool Categorias::EstaVacio(void) const
 {
     return usados == 0; // Devolvemos si está vacío
 
@@ -522,6 +537,99 @@ Categorias& Categorias::operator+=(const Categoria& otro)
     return *this; // Devolvemos el objeto actual
 }
 
+/***********************************************/
+/***********************************************/
+// Operador lectura >>
+// Descripción: Lee los datos de un flujo de entrada y los asigna al objeto.
+// Argumentos:
+//      is: Flujo de entrada.
+//      objeto: Objeto Categorias al que se asignan los datos.
+// Devuelve: Una referencia al flujo de entrada.
+istream& operator>>(istream& is, Categorias& objeto)
+{
+    objeto.LiberarMemoria(); // Liberamos la memoria
+
+    Categoria categoria; // Creamos un objeto Categoria
+
+    while (is >> categoria) // Mientras se pueda leer
+    {
+        objeto+=categoria; // Añadimos el objeto
+    }
+
+    return is; // Devolvemos el flujo de entrada
+}
+
+/***********************************************/
+/***********************************************/
+// Operador escritura <<
+// Descripción: Escribe los datos del objeto en un flujo de salida.
+// Argumentos:
+//      os: Flujo de salida.
+//      objeto: Objeto Categorias que se escribe.
+// Devuelve: Una referencia al flujo de salida.
+ostream& operator<<(ostream& os, const Categorias& objeto)
+{
+    for (int i = 0; i < objeto.usados; i++) // Recorremos los datos
+    {
+        os << objeto.datos[i]<<endl; // Escribimos los datos
+    }
+
+    return os; // Devolvemos el flujo de salida
+}
+
+/***********************************************/
+/***********************************************/
+// Metodo de Escritura en Fichero
+// Descripción: Escribe los datos del objeto en un fichero.
+// Argumentos:
+//      nombre: Nombre del fichero en el que se escriben los datos.
+void Categorias::EscribirCategorias(const string & nombre) const
+{
+    if (!EstaVacio()) // Si no está vacío
+    {
+        ofstream fichero; // Creamos un objeto ofstream
+
+        fichero.open(nombre); // Abrimos el fichero
+
+        if (fichero.is_open()) // Si se ha abierto
+        {
+            fichero << *this; // Escribimos los datos
+            fichero.close(); // Cerramos el fichero
+        }
+    }
+}
+
+/***********************************************/
+/***********************************************/
+// Metodo de Lectura en Fichero
+// Descripción: Lee los datos de un fichero y los asigna al objeto.
+// Argumentos:
+//      nombre: Nombre del fichero del que se leen los datos.
+void Categorias::LeerCategorias(const string & nombre)
+{
+    LiberarMemoria(); // Liberamos la memoria
+    
+    string fin;
+    fin = AniadirDirectorio("data", nombre); // Añadimos el directorio
+    
+    ifstream fichero(fin); // Creamos un objeto ifstream
+
+    string cad_mag;
+    getline(fichero, cad_mag);
+
+    if (fichero && cad_mag == "CATEGORIAS") // Si se ha abierto
+    {
+        SaltarCabecera(fichero); // Saltamos la cabecera
+        fichero >> *this; // Leemos los datos
+        fichero.close(); // Cerramos el fichero
+    }
+    else // Si no se ha abierto
+    {
+        // quedará vacío
+        EliminaTodos(); // Liberamos la memoria
+    }
+}
+
 /*****************************************************************************/
 /*****************************************************************************/
 /*****************************************************************************/
@@ -586,6 +694,9 @@ void Categorias:: LiberarMemoria (void)
     {
         delete [] datos; // Liberamos la memoria
         datos = nullptr; // Ponemos el puntero a nulo
+
+        usados = 0; // Ponemos los usados a 0
+        capacidad = 0; // Ponemos la capacidad a 0
     }
        
 }	

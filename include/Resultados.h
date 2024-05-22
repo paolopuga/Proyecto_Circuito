@@ -63,6 +63,14 @@ public:
 
 	/***********************************************/
 	/***********************************************/
+	// Constructor a partir de un fichero
+	// Descripción: Crea un objeto Resultados a partir de un fichero.
+	// Argumentos:
+	//      nombre: Nombre del fichero del que se leen los datos.
+	Resultados(const string & nombre);
+
+	/***********************************************/
+	/***********************************************/
 	// Destructor
 	// Descripción: Libera memoria y recursos utilizados por el objeto.
 	~Resultados(void);
@@ -83,7 +91,7 @@ public:
 	/***********************************************/
 	// EstaVacio
 	// Descripción: Comprueba si el objeto está vacío.
-	bool EstaVacio(void);
+	bool EstaVacio(void) const;
 
 	/***********************************************/
 	/***********************************************/
@@ -332,6 +340,41 @@ public:
 	// Devuelve: Un objeto Resultados con el Resultado añadido.
 	Resultados& operator+=(const Resultado& otro);
 
+	/***********************************************/
+	/***********************************************/
+	// Operador lectura >>
+	// Descripción: Lee los datos de un flujo de entrada y los asigna al objeto.
+	// Argumentos:
+	//      is: Flujo de entrada.
+	//      objeto: Objeto Resultados al que se asignan los datos.
+	// Devuelve: Una referencia al flujo de entrada.
+	friend istream& operator>>(istream& is, Resultados& objeto);
+
+	/***********************************************/
+	/***********************************************/
+	// Operador escritura <<
+	// Descripción: Escribe los datos del objeto en un flujo de salida.
+	// Argumentos:
+	//      os: Flujo de salida.
+	//      objeto: Objeto Resultados que se escribe.
+	// Devuelve: Una referencia al flujo de salida.
+	friend ostream& operator<<(ostream& os, const Resultados& objeto);
+
+	/***********************************************/
+	/***********************************************/
+	// Metodo de Escritura en Fichero
+	// Descripción: Escribe los datos del objeto en un fichero.
+	// Argumentos:
+	//      nombre: Nombre del fichero en el que se escriben los datos.
+	void EscribirResultados(const string & nombre) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Metodo de Lectura en Fichero
+	// Descripción: Lee los datos de un fichero y los asigna al objeto.
+	// Argumentos:
+	//      nombre: Nombre del fichero del que se leen los datos.
+	void LeerResultados(const string & nombre);
 
 private:
 

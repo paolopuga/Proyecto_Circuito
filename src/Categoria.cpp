@@ -21,6 +21,11 @@
 #include <string>
 
 #include "Categoria.h"
+#include "Fecha.h"
+
+#include "Utils.h"
+
+using namespace std;
 
 /******************CONSTRUCTORES**********************/
 
@@ -51,28 +56,16 @@ Categoria::Categoria(string linea, char delimitador) {
    
     /*********************************************/
     // Inicializo los campos numericos con stoi
-    IdCategoria = stoi(campo1);
+    IdCategoria = stoi(RemoveBlanks(campo1));
 
     // Inicializo los campos de tipo Fecha
-    FechaInicial = Fecha(campo4);
-    FechaFinal = Fecha(campo5);
+    FechaInicial = Fecha(RemoveBlanks(campo4));
+    FechaFinal = Fecha(RemoveBlanks(campo5));
     
-    // Inicializo los campos de tipo string    
-    istringstream iss2(campo2);
-    while (iss2 >> campo2) {
-        Denominacion += campo2 + " ";
-    }
-    Denominacion.pop_back(); // quito el último espacio
-
-    string sexoespacios;
-
-    istringstream iss3(campo3);
-    while (iss3 >> campo3) {
-        sexoespacios+= campo3 + " ";
-    }
-    sexoespacios.pop_back(); // quito el último espacio
-
-    Sexo = sexoespacios[0];
+    // Inicializo los campos de tipo string 
+    Denominacion = RemoveBlanks(campo2);
+    campo3 = RemoveBlanks(campo3);
+    Sexo = campo3[0];
 
 }
 
@@ -199,7 +192,7 @@ istream & operator >> (istream & in, Categoria& objeto)
 {
     string linea;
     getline(in, linea);
-    objeto = Categoria(linea);
+    if(!in.eof()) objeto = Categoria(linea);
     return in;
 }
 

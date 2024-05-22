@@ -21,6 +21,11 @@
 #include <string>
 
 #include "Carrera.h"
+#include "Fecha.h"
+
+#include "Utils.h"
+
+using namespace std;
 
 
 
@@ -51,24 +56,17 @@ Carrera::Carrera(string linea, char delimitador) {
 	getline(iss, campo4, delimitador);
 	
 	/*********************************************/
-	// Inicializo los campos nuemericos con stoi
-	IdCarrera = stoi(campo1);
-	Distancia = stod(campo2);
-
+	// Inicializo los campos nuemericos
+	IdCarrera = stoi(RemoveBlanks(campo1));
+	Distancia = stod(RemoveBlanks(campo2));
 
 	/*********************************************/
 	// Inicializo los campos de tipo Fecha
-	FechaCarrera = Fecha(campo3);
-	
+	FechaCarrera = Fecha(RemoveBlanks(campo3));
 	
 	/*********************************************/
-	// Inicializo el campo Nombre con flujo aux
-	istringstream iss2(campo4);
-	
-	while (iss2 >> campo4) {
-		Nombre += campo4 + " ";
-	}
-	Nombre.pop_back();
+	// Inicializo el campo Nombre 
+	Nombre = RemoveBlanks(campo4);
 
 }
 
@@ -165,7 +163,7 @@ string Carrera::ToString (const string nombre) const
 	oss << setw(3) << IdCarrera <<" ";
 	oss << setw(40) << left << Nombre << " ";
 	oss << setw(5) << Distancia << " ";
-	oss << FechaCarrera.ToString() ;
+	oss << FechaCarrera.ToString(true) ;
 
 	return oss.str(); // Devuelvo el flujo formato string
 }
@@ -179,7 +177,7 @@ istream & operator >> (istream & in, Carrera & objeto)
 {
 	string linea;
 	getline(in, linea);
-	objeto = Carrera(linea);
+	if ( !in.eof() ) objeto = Carrera(linea);
 	return in;
 }
 

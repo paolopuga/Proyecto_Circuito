@@ -345,6 +345,25 @@ public:
 	// Devuelve: Un objeto TodosResultados con el Resultados añadido.
 	TodosResultados& operator+=(const Resultados& otro);
 
+	/***********************************************/
+	/***********************************************/
+	// Operador lectura >>
+	// Descripción: Lee los datos de un flujo de entrada y los asigna al objeto.
+	// Argumentos:
+	//      is: Flujo de entrada.
+	//      objeto: Objeto TodoResultados al que se asignan los datos.
+	// Devuelve: Una referencia al flujo de entrada.
+	friend istream& operator>>(istream& is, TodosResultados& objeto);
+
+	/***********************************************/
+	/***********************************************/
+	// Operador escritura <<
+	// Descripción: Escribe los datos del objeto en un flujo de salida.
+	// Argumentos:
+	//      os: Flujo de salida.
+	//      objeto: Objeto TodoResultados que se escribe.
+	// Devuelve: Una referencia al flujo de salida.
+	friend ostream& operator<<(ostream& os, const TodosResultados& objeto);
 
 private:
 

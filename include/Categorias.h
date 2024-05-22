@@ -63,6 +63,14 @@ public:
 
 	/***********************************************/
 	/***********************************************/
+	// Constructor a partir de un fichero
+	// Descripción: Crea un objeto Categorias a partir de un fichero.
+	// Argumentos:
+	//      nombre: Nombre del fichero del que se leen los datos.
+	Categorias(const string & nombre);
+
+	/***********************************************/
+	/***********************************************/
 	// Destructor
 	// Descripción: Libera memoria y recursos utilizados por el objeto.
 	~Categorias(void);
@@ -83,7 +91,7 @@ public:
 	/***********************************************/
 	// EstaVacio
 	// Descripción: Comprueba si el objeto está vacío.
-	bool EstaVacio(void);
+	bool EstaVacio(void)const;
 
 	/***********************************************/
 	/***********************************************/
@@ -332,6 +340,41 @@ public:
 	// Devuelve: Un objeto Categorias con el Categoria añadido.
 	Categorias& operator+=(const Categoria& otro);
 
+	/***********************************************/
+	/***********************************************/
+	// Operador lectura >>
+	// Descripción: Lee los datos de un flujo de entrada y los asigna al objeto.
+	// Argumentos:
+	//      is: Flujo de entrada.
+	//      objeto: Objeto Categorias al que se asignan los datos.
+	// Devuelve: Una referencia al flujo de entrada.
+	friend istream& operator>>(istream& is, Categorias& objeto);
+
+	/***********************************************/
+	/***********************************************/
+	// Operador escritura <<
+	// Descripción: Escribe los datos del objeto en un flujo de salida.
+	// Argumentos:
+	//      os: Flujo de salida.
+	//      objeto: Objeto Categorias que se escribe.
+	// Devuelve: Una referencia al flujo de salida.
+	friend ostream& operator<<(ostream& os, const Categorias& objeto);
+
+	/***********************************************/
+	/***********************************************/
+	// Metodo de Escritura en Fichero
+	// Descripción: Escribe los datos del objeto en un fichero.
+	// Argumentos:
+	//      nombre: Nombre del fichero en el que se escriben los datos.
+	void EscribirCategorias(const string & nombre) const;
+
+	/***********************************************/
+	/***********************************************/
+	// Metodo de Lectura en Fichero
+	// Descripción: Lee los datos de un fichero y los asigna al objeto.
+	// Argumentos:
+	//      nombre: Nombre del fichero del que se leen los datos.
+	void LeerCategorias(const string & nombre);
 
 private:
 

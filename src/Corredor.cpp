@@ -16,10 +16,15 @@
 
 #include <iostream>
 #include <cstring>
+#include <sstream>
 #include <iomanip>
 
 #include "Corredor.h"
 #include "Fecha.h"
+
+#include "Utils.h"
+
+using namespace std;
 
 /******************CONSTRUCTORES**********************/
 
@@ -52,40 +57,18 @@ Corredor::Corredor(string linea, char delimitador) {
 
     /*********************************************/
     // Inicializo los campos numericos con stoi
-    Dorsal = stoi(campo1);
+    Dorsal = stoi(RemoveBlanks(campo1));
 
     // Inicializo los campos de tipo Fecha
-    FechaNacimiento = Fecha(campo5);
+    FechaNacimiento = Fecha(RemoveBlanks(campo5));
 
     // Inicializo los campos de tipo string
-    string sexoespacios;
-    istringstream iss2(campo6);
-    while (iss2 >> campo6) {
-        sexoespacios+= campo6 + " ";
-    }
-    sexoespacios.pop_back(); // quito el último espacio
-    Sexo = sexoespacios[0];
-    
-    istringstream iss3(campo2);
-    while (iss3 >> campo2) {
-        DNI += campo2 + " ";
-    }
-    DNI.pop_back(); // quito el último espacio
- 
-
-    istringstream iss4(campo3);
-    while (iss4 >> campo3) {
-        Nombre += campo3 + " ";
-    }
-    Nombre.pop_back(); // quito el último espacio
-    
-    istringstream iss5(campo4);
-    while (iss5 >> campo4) {
-        Apellidos += campo4 + " ";
-    }
-    Apellidos.pop_back(); // quito el último espacio
-
-       
+    campo6= RemoveBlanks(campo6);
+    Sexo = campo6[0];
+    DNI = RemoveBlanks(campo2);
+    Nombre = RemoveBlanks(campo3);
+    Apellidos = RemoveBlanks(campo4);
+     
 }
 
 
@@ -215,7 +198,7 @@ istream & operator >> (istream & in, Corredor & objeto)
 {
     string linea;
     getline(in, linea);
-    objeto = Corredor(linea);
+    if(!in.eof())objeto = Corredor(linea);
     return in;
 
 }

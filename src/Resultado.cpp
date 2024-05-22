@@ -16,10 +16,15 @@
 
 #include <iostream>
 #include <cstring>
+#include <sstream>
 #include <iomanip>
 
 #include "Resultado.h"
+#include "Tiempo.h"
 
+#include "Utils.h"
+
+using namespace std;
 
 /******************CONSTRUCTORES**********************/
 
@@ -47,11 +52,11 @@ Resultado::Resultado(string linea, char delimitador) {
    
     /*********************************************/
     // Inicializo los campos numericos con stoi
-    Dorsal = stoi(campo1);   
-    Posicion = stoi(campo3);
+    Dorsal = stoi(RemoveBlanks(campo1));   
+    Posicion = stoi(RemoveBlanks(campo3));
 
     // Inicializo los campos de tipo Tiempo
-    TiempoCarrera = Tiempo(campo2);
+    TiempoCarrera = Tiempo(RemoveBlanks(campo2));
     
 }
 
@@ -143,7 +148,7 @@ istream & operator >> (istream & in, Resultado & objeto)
 {
     string linea;
     getline(in, linea);
-    objeto = Resultado(linea);
+    if(!in.eof())objeto = Resultado(linea);
     return in;
 }
 
