@@ -2,10 +2,10 @@
 /***************************************************************************/
 // METODOLOGÍA DE LA PROGRAMACIÓN
 //
-// (C) FRANCISCO JOSÉ CORTIJO BON
-// DEPARTAMENTO DE CIENCIAS DE LA COMPUTACIÓN E INTELIGENCIA ARTIFICIAL
+// PAOLO PUGA DE PATTO
+// PRIMERO B DE INGENIERÍA INFORMÁTICA
 // 
-// Fichero: main_MP_Proyecto_Fase3.cpp
+// Fichero: main_MP_Proyecto_Fase4.cpp
 //
 // Función main del proyecto. 
 //
@@ -22,6 +22,7 @@
 #include <cstring>
 
 #include "Utils.h"
+#include "Directorios.h"
 
 #include "Fecha.h"
 #include "Tiempo.h"
@@ -63,11 +64,14 @@ int main (int argc, char **argv )
 	// Inicilizar el fichero de configuración
 
 	string fin;
-	fin = AniadirDirectorio("data", argv[1]);
+	fin = AniadirDirectorio(DIR_CONFIG, argv[1]);
 
 	ifstream fcfg(fin);
 	if (!fcfg) {
 		cerr << "Error: no se pudo abrir el fichero de entrada" << endl;
+		cerr << "Compruebe que el fichero: |" << argv[1] << "| existe,\nsea"
+		     << " accesible y se encuentre en el directorio: " << DIR_CONFIG 
+			 << endl;
 		exit(2);
 	}	
 

@@ -178,7 +178,8 @@ string Categoria::ToString (const string nombre) const
         oss << setw(7) << left << "MUJER" << " ";
     }
 
-    oss << "[" << FechaInicial.GetAnio() << " - " << FechaFinal.GetAnio() << "]" ;
+    oss << "[" << FechaInicial.GetAnio() << " - " 
+    << FechaFinal.GetAnio() << "]" ;
 
 	return oss.str(); // Devuelvo el flujo formato string
 }

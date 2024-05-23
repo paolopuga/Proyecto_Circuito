@@ -23,6 +23,7 @@
 #include "Resultado.h"
 
 #include "Utils.h"
+#include "Directorios.h"
 
 using namespace std;
 
@@ -610,7 +611,7 @@ void Resultados::LeerResultados(const string & nombre)
 {
     LiberarMemoria(); // Liberamos la memoria
 
-    string fin = AniadirDirectorio("data", nombre); // Añadimos el directorio
+    string fin = AniadirDirectorio(DIR_DATOS, nombre); // Añadimos el directorio
 
     ifstream fichero(fin); // Creamos un objeto ifstream
 

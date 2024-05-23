@@ -23,6 +23,7 @@
 #include "Carrera.h"
 
 #include "Utils.h"
+#include "Directorios.h"
 
 using namespace std;
 
@@ -620,7 +621,7 @@ void Carreras::LeerCarreras(const string & nombre)
 {
     LiberarMemoria(); // Liberamos la memoria
 
-    string fin = AniadirDirectorio("data", nombre); // Añadimos el directorio
+    string fin = AniadirDirectorio(DIR_DATOS, nombre); // Añadimos el dir
     
     ifstream fichero(fin); // Creamos un objeto ifstream
 

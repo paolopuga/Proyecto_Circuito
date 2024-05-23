@@ -83,9 +83,7 @@ $(BIN)/MP_Proyecto_Fase4: $(OBJ)/main_MP_Proyecto_Fase4.o \
 	@echo Creando ejecutable: main_MP_Proyecto_Fase4
 	@echo
 	g++ -o $(BIN)/MP_Proyecto_Fase4 $(OBJ)/main_MP_Proyecto_Fase4.o \
-			-lTiempo -lFecha -lCarreras -lCorredores -lCategorias -lResultados\
-			-lCarrera -lCorredor -lCategoria -lResultado -lTodosResultados\
-			-lUtils -L$(LIB) -std=c++11
+			$(LIBS) -L$(LIB) -std=c++11
 
 
 #..............................................................................
@@ -98,7 +96,7 @@ $(OBJ)/main_MP_Proyecto_Fase4.o: $(SRC)/main_MP_Proyecto_Fase4.cpp \
 							$(INCLUDE)/Categorias.h $(INCLUDE)/Resultados.h \
 							$(INCLUDE)/TodosResultados.h \
 							$(INCLUDE)/Fecha.h $(INCLUDE)/Tiempo.h \
-							$(INCLUDE)/Utils.h
+							$(INCLUDE)/Utils.h $(INCLUDE)/Directorios.h
 	@echo
 	@echo Creando objeto: main_MP_Proyecto_Fase4.o
 	@echo
@@ -120,7 +118,7 @@ $(OBJ)/Carrera.o : $(SRC)/Carrera.cpp $(INCLUDE)/Carrera.h \
 
 $(OBJ)/Carreras.o : $(SRC)/Carreras.cpp $(INCLUDE)/Carreras.h \
 					  $(INCLUDE)/Carrera.h \
-					  $(INCLUDE)/Utils.h
+					  $(INCLUDE)/Utils.h $(INCLUDE)/Directorios.h
 	@echo
 	@echo Creando objeto: Carreras.o
 	@echo
@@ -137,7 +135,7 @@ $(OBJ)/Corredor.o : $(SRC)/Corredor.cpp $(INCLUDE)/Corredor.h \
 
 $(OBJ)/Corredores.o : $(SRC)/Corredores.cpp $(INCLUDE)/Corredores.h \
 					  $(INCLUDE)/Corredor.h \
-					  $(INCLUDE)/Utils.h
+					  $(INCLUDE)/Utils.h $(INCLUDE)/Directorios.h
 	@echo
 	@echo Creando objeto: Corredores.o
 	@echo
@@ -154,7 +152,7 @@ $(OBJ)/Categoria.o : $(SRC)/Categoria.cpp $(INCLUDE)/Categoria.h \
 
 $(OBJ)/Categorias.o : $(SRC)/Categorias.cpp $(INCLUDE)/Categorias.h \
 					  $(INCLUDE)/Categoria.h \
-					  $(INCLUDE)/Utils.h
+					  $(INCLUDE)/Utils.h $(INCLUDE)/Directorios.h
 	@echo
 	@echo Creando objeto: Categorias.o
 	@echo
@@ -172,7 +170,7 @@ $(OBJ)/Resultado.o : $(SRC)/Resultado.cpp $(INCLUDE)/Resultado.h \
 
 $(OBJ)/Resultados.o : $(SRC)/Resultados.cpp $(INCLUDE)/Resultados.h \
 					  $(INCLUDE)/Resultado.h \
-					  $(INCLUDE)/Utils.h
+					  $(INCLUDE)/Utils.h $(INCLUDE)/Directorios.h
 	@echo
 	@echo Creando objeto: Resultados.o
 	@echo
@@ -256,7 +254,7 @@ $(LIB)/libCorredor.a : $(OBJ)/Corredor.o $(OBJ)/Fecha.o
 	@echo
 	ar rvs $(LIB)/libCorredor.a $(OBJ)/Corredor.o $(OBJ)/Fecha.o
 
-$(LIB)/libCorredores.a : $(OBJ)/Corredores.o $(OBJ)/Corredor.o $(OBJ)/Tiempo.o \
+$(LIB)/libCorredores.a : $(OBJ)/Corredores.o $(OBJ)/Corredor.o $(OBJ)/Tiempo.o\
 							$(OBJ)/Utils.o
 	@echo
 	@echo Creando biblioteca: libCorredores.a

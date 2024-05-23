@@ -23,6 +23,7 @@
 #include "Categoria.h"
 
 #include "Utils.h"
+#include "Directorios.h"
 
 using namespace std;
 
@@ -610,7 +611,7 @@ void Categorias::LeerCategorias(const string & nombre)
     LiberarMemoria(); // Liberamos la memoria
     
     string fin;
-    fin = AniadirDirectorio("data", nombre); // Añadimos el directorio
+    fin = AniadirDirectorio(DIR_DATOS, nombre); // Añadimos el directorio
     
     ifstream fichero(fin); // Creamos un objeto ifstream
 
