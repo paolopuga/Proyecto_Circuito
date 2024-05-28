@@ -15,6 +15,5 @@
 #define DIRECTORIOS
 
 #define DIR_DATOS "data"
-#define DIR_CONFIG "config"
 
 #endif

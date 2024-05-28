@@ -594,6 +594,8 @@ void Categorias::EscribirCategorias(const string & nombre) const
 
         if (fichero.is_open()) // Si se ha abierto
         {
+            // Escribimos la palabra mágica
+            fichero << "CATEGORIAS" << endl;
             fichero << *this; // Escribimos los datos
             fichero.close(); // Cerramos el fichero
         }

@@ -605,6 +605,8 @@ void Carreras::EscribirCarreras(const string & nombre) const
 
         if (fichero) // Si se ha abierto
         {
+            // Escribimos la palabra mágica
+            fichero << "CARRERAS" << endl;
             fichero << *this; // Escribimos los datos
             fichero.close(); // Cerramos el fichero
         }

@@ -63,15 +63,11 @@ int main (int argc, char **argv )
 
 	// Inicilizar el fichero de configuración
 
-	string fin;
-	fin = AniadirDirectorio(DIR_CONFIG, argv[1]);
-
-	ifstream fcfg(fin);
+	ifstream fcfg(argv[1]);
 	if (!fcfg) {
 		cerr << "Error: no se pudo abrir el fichero de entrada" << endl;
-		cerr << "Compruebe que el fichero: |" << argv[1] << "| existe,\nsea"
-		     << " accesible y se encuentre en el directorio: " << DIR_CONFIG 
-			 << endl;
+		cerr << "Compruebe que el fichero: |" << argv[1] << "| existe y\nsea"
+		     << " accesible"<< endl;
 		exit(2);
 	}	
 

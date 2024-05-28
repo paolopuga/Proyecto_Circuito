@@ -595,6 +595,8 @@ void Corredores::EscribirCorredores(const string & nombre) const
 
         if (fichero) // Si se ha abierto
         {
+            // Escribimos la palabra mágica
+            fichero << "CORREDORES" << endl;
             fichero << *this; // Escribimos los datos
             fichero.close(); // Cerramos el fichero
         }
